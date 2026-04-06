@@ -7,12 +7,19 @@
   "plans": [
     {
       "name": "Free",
+      "category": "model_provider",
       "price_usd_monthly": 0,
       "price_usd_annual": null,
+      "interactions_monthly": null,
+      "interactions_note": "Limited, unspecified",
       "requests_per_window": null,
       "window_hours": null,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "gpt-4o-mini"
+      ],
       "models_included": [
         "gpt-4o-mini"
       ],
@@ -26,6 +33,7 @@
         "cline": true,
         "kilo": true,
         "roo": true,
+        "pi": true,
         "notes": "Via OpenAI API key. All major clients supported."
       },
       "restrictions": [
@@ -37,12 +45,19 @@
     },
     {
       "name": "Go",
+      "category": "model_provider",
       "price_usd_monthly": 8,
       "price_usd_annual": null,
+      "interactions_monthly": null,
+      "interactions_note": "Soft limit",
       "requests_per_window": null,
       "window_hours": null,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "gpt-4o-chatgpt"
+      ],
       "models_included": [
         "gpt-4o"
       ],
@@ -57,6 +72,7 @@
         "cline": true,
         "kilo": true,
         "roo": true,
+        "pi": true,
         "notes": "Via OpenAI API key. All major clients supported."
       },
       "restrictions": [],
@@ -66,15 +82,23 @@
     },
     {
       "name": "Plus",
+      "category": "model_provider",
       "price_usd_monthly": 20,
       "price_usd_annual": null,
+      "interactions_monthly": null,
+      "interactions_note": "Soft limit",
       "requests_per_window": null,
       "window_hours": null,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "gpt-4o-chatgpt",
+        "gpt-5-chatgpt"
+      ],
       "models_included": [
         "gpt-4o",
-        "o3"
+        "gpt-5"
       ],
       "modalities": [
         "text",
@@ -90,6 +114,7 @@
         "cline": true,
         "kilo": true,
         "roo": true,
+        "pi": true,
         "notes": "Via OpenAI API key. All major clients supported."
       },
       "restrictions": [],
@@ -99,16 +124,25 @@
     },
     {
       "name": "Pro",
+      "category": "model_provider",
       "price_usd_monthly": 200,
       "price_usd_annual": null,
+      "interactions_monthly": null,
+      "interactions_note": "Unlimited access to all models",
       "requests_per_window": null,
       "window_hours": null,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "gpt-4o-chatgpt",
+        "gpt-5-chatgpt",
+        "gpt-5-codex-high"
+      ],
       "models_included": [
         "gpt-4o",
-        "o3",
-        "o3-pro"
+        "gpt-5",
+        "gpt-5-codex"
       ],
       "modalities": [
         "text",
@@ -124,6 +158,7 @@
         "cline": true,
         "kilo": true,
         "roo": true,
+        "pi": true,
         "notes": "Via OpenAI API key. All major clients supported."
       },
       "restrictions": [],

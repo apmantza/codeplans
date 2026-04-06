@@ -8,12 +8,19 @@
   "plans": [
     {
       "name": "Pro",
-      "price_usd_monthly": 17,
+      "category": "model_provider",
+      "price_usd_monthly": 20,
       "price_usd_annual": null,
+      "interactions_monthly": null,
+      "interactions_note": "Soft limit, no hard cap published",
       "requests_per_window": null,
       "window_hours": null,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "claude-sonnet-4.6-non-reasoning-low-effort"
+      ],
       "models_included": [
         "claude-sonnet-4-6"
       ],
@@ -29,6 +36,7 @@
         "cline": false,
         "kilo": false,
         "roo": false,
+        "pi": false,
         "notes": "Blocked as of April 4 2026. Subscription OAuth tokens no longer work in third-party clients. API access required separately."
       },
       "restrictions": [
@@ -40,12 +48,20 @@
     },
     {
       "name": "Max 5x",
+      "category": "model_provider",
       "price_usd_monthly": 100,
       "price_usd_annual": null,
+      "interactions_monthly": null,
+      "interactions_note": "5× Pro usage, no hard cap published",
       "requests_per_window": null,
       "window_hours": null,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "claude-sonnet-4.6-non-reasoning-low-effort",
+        "claude-opus-4.6-non-reasoning-high-effort"
+      ],
       "models_included": [
         "claude-sonnet-4-6",
         "claude-opus-4-6"
@@ -62,6 +78,7 @@
         "cline": false,
         "kilo": false,
         "roo": false,
+        "pi": false,
         "notes": "Blocked as of April 4 2026. Subscription OAuth tokens no longer work in third-party clients. API access required separately."
       },
       "restrictions": [
@@ -74,12 +91,20 @@
     },
     {
       "name": "Max 20x",
+      "category": "model_provider",
       "price_usd_monthly": 200,
       "price_usd_annual": null,
+      "interactions_monthly": null,
+      "interactions_note": "20× Pro usage, no hard cap published",
       "requests_per_window": null,
       "window_hours": null,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "claude-sonnet-4.6-non-reasoning-low-effort",
+        "claude-opus-4.6-non-reasoning-high-effort"
+      ],
       "models_included": [
         "claude-sonnet-4-6",
         "claude-opus-4-6"
@@ -96,6 +121,7 @@
         "cline": false,
         "kilo": false,
         "roo": false,
+        "pi": false,
         "notes": "Blocked as of April 4 2026. Subscription OAuth tokens no longer work in third-party clients. API access required separately."
       },
       "restrictions": [
@@ -108,12 +134,20 @@
     },
     {
       "name": "Team",
+      "category": "model_provider",
       "price_usd_monthly": 30,
       "price_usd_annual": null,
+      "interactions_monthly": null,
+      "interactions_note": "Per-user, soft limit",
       "requests_per_window": null,
       "window_hours": null,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "claude-sonnet-4.6-non-reasoning-low-effort",
+        "claude-opus-4.6-non-reasoning-high-effort"
+      ],
       "models_included": [
         "claude-sonnet-4-6",
         "claude-opus-4-6"
@@ -130,6 +164,7 @@
         "cline": false,
         "kilo": false,
         "roo": false,
+        "pi": false,
         "notes": "Blocked as of April 4 2026. Subscription OAuth tokens no longer work in third-party clients. API access required separately."
       },
       "restrictions": [

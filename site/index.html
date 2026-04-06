@@ -4,22 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>codeplans — AI Coding Plan Comparison</title>
-  <meta name="description" content="Compare AI coding subscription plans: pricing, rate limits, modalities, and third-party client support across Anthropic, OpenAI, z.ai, Kimi, MiniMax, and MiMo.">
+  <meta name="description" content="Compare AI coding subscription plans: pricing, interactions, model quality scores, and third-party client support.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <header>
   <h1><span>code</span>plans</h1>
-  <p>AI coding plan comparison — pricing, limits, modalities &amp; client compatibility</p>
+  <p>AI coding plan comparison — pricing, limits, model quality &amp; value</p>
   <div class="updated" id="updated"></div>
 </header>
 
 <div class="filters">
-  <span style="font-size:12px;color:var(--muted);align-self:center;margin-right:4px;">Filter:</span>
-  <button class="filter-btn active" data-filter="all">All providers</button>
+  <span style="font-size:12px;color:var(--muted);align-self:center;margin-right:4px;">Category:</span>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="model_provider">Model providers</button>
+  <button class="filter-btn" data-filter="coding_platform">Coding platforms</button>
   <button class="filter-btn" data-filter="third-party">3rd-party clients ✓</button>
-  <button class="filter-btn" data-filter="multimodal">Multimodal</button>
+  <button class="filter-btn" data-filter="pi">pi compatible</button>
+  <span style="font-size:12px;color:var(--muted);align-self:center;margin:0 4px 0 12px;">Sort:</span>
+  <button class="filter-btn" data-sort="value">Best value ↓</button>
+  <button class="filter-btn" data-sort="price">Price ↑</button>
+</div>
+
+<div class="value-note">
+  <strong>Value score</strong> = (model coding index × interactions/mo) ÷ price/mo.
+  Interactions assume ~4k tokens each. Coding index from <a href="https://artificialanalysis.ai" target="_blank">Artificial Analysis</a> (0–70 scale, updated monthly via pi-free).
+  Free plans and unlimited/soft-capped plans show — for value.
 </div>
 
 <div class="table-wrap">
@@ -27,8 +38,11 @@
     <thead>
       <tr>
         <th class="provider-col">Provider / Plan</th>
+        <th>Category</th>
         <th>Price/mo</th>
-        <th>Rate limit</th>
+        <th title="Normalized agent interactions per month (see note above)">Interactions/mo</th>
+        <th title="Best coding index among plan's models (Artificial Analysis, 0-70)">Coding index</th>
+        <th title="Quality-adjusted value score — higher is better">Value score</th>
         <th>3rd-party clients</th>
         <th>Modalities</th>
         <th>Models</th>
@@ -36,7 +50,7 @@
       </tr>
     </thead>
     <tbody id="table-body">
-      <tr><td colspan="7" style="color:var(--muted);padding:24px">Loading...</td></tr>
+      <tr><td colspan="10" style="color:var(--muted);padding:24px">Loading...</td></tr>
     </tbody>
   </table>
 </div>
@@ -48,38 +62,74 @@
 
 <script src="data.js"></script>
 <script>
-const CLIENTS = ["openclaw", "cline", "kilo", "roo"];
+const CLIENTS = ["openclaw", "cline", "kilo", "roo", "pi"];
+const CLIENT_LABELS = { openclaw: "OpenClaw", cline: "Cline", kilo: "Kilo", roo: "Roo", pi: "pi" };
 const MODALITY_LABELS = {
   text: "Text", code: "Code", image_input: "Image in",
   image_gen: "Image gen", audio: "Audio", video: "Video",
   music: "Music", file_upload: "Files"
 };
 
-function fmt(plan) {
-  const price = plan.price_usd_monthly != null
-    ? `$${plan.price_usd_monthly}`
-    : "—";
+// Compute global max value for normalization of value bar
+let globalMaxValue = 0;
 
-  const annualNote = plan.price_usd_annual != null
-    ? `$${plan.price_usd_annual}/yr` : "";
+function buildRows(data) {
+  const rows = [];
+  for (const [, provider] of Object.entries(data)) {
+    for (const plan of provider.plans) {
+      if (plan.coding_value) globalMaxValue = Math.max(globalMaxValue, plan.coding_value);
+      rows.push({ provider, plan });
+    }
+  }
+  return rows;
+}
 
-  const introHtml = plan.intro_pricing
-    ? `<div class="intro-badge">⚡ ${plan.intro_notes}</div>` : "";
+function fmtValue(val) {
+  if (val == null) return `<span style="color:var(--muted)">—</span>`;
+  const pct = Math.round((val / globalMaxValue) * 100);
+  return `
+    <div class="value-bar-wrap" title="Value score: ${val.toLocaleString()}">
+      <div class="value-bar" style="width:${pct}%"></div>
+      <span class="value-num">${val >= 1000 ? (val/1000).toFixed(1)+'k' : val}</span>
+    </div>`;
+}
 
-  const rateLimit = plan.requests_per_window != null
-    ? `<div class="rate-limit">${plan.requests_per_window.toLocaleString()} req <span>/ ${plan.window_hours}h</span></div>`
-    : plan.tokens_monthly != null
-    ? `<div class="rate-limit">${(plan.tokens_monthly/1e6).toFixed(0)}M <span>tokens/mo</span></div>`
-    : `<span style="color:var(--muted)">—</span>`;
+function fmtInteractions(plan) {
+  if (plan.interactions_monthly == null) return `<span style="color:var(--muted)" title="${plan.interactions_note || ''}">—</span>`;
+  const n = plan.interactions_monthly;
+  const label = n >= 1_000_000 ? (n/1_000_000).toFixed(1)+'M'
+              : n >= 1_000     ? (n/1_000).toFixed(0)+'k'
+              : n.toLocaleString();
+  return `<span title="${plan.interactions_note || ''}">${label}</span>`;
+}
 
-  const tc = plan.third_party_clients;
+function fmtCodingIndex(ci) {
+  if (ci == null) return `<span style="color:var(--muted)">—</span>`;
+  const pct = Math.round((ci / 70) * 100);
+  const color = pct >= 70 ? '#4ade80' : pct >= 50 ? '#facc15' : '#f87171';
+  return `<span style="color:${color};font-weight:600">${ci.toFixed(1)}</span><span style="color:var(--muted);font-size:10px">/70</span>`;
+}
+
+function fmtRow({ provider, plan }) {
+  const price = plan.price_usd_monthly === 0 ? 'Free'
+              : plan.price_usd_monthly != null ? `$${plan.price_usd_monthly}`
+              : '—';
+  const annualNote = plan.price_usd_annual != null ? `<div class="price-note">$${plan.price_usd_annual}/yr</div>` : "";
+  const introHtml = plan.intro_pricing ? `<div class="intro-badge">⚡ ${plan.intro_notes}</div>` : "";
+
+  const catLabel = plan.category === 'coding_platform' ? 'Platform' : 'Provider';
+  const catClass = plan.category === 'coding_platform' ? 'cat-platform' : 'cat-provider';
+
+  const tc = plan.third_party_clients || {};
   const tcBadge = tc.supported
     ? `<span class="badge green"><span class="dot green"></span> Supported</span>`
     : `<span class="badge red"><span class="dot red"></span> Blocked</span>`;
-
   const clientTags = CLIENTS.map(c =>
-    `<span class="client-tag ${tc[c] ? 'yes' : 'no'}">${c}</span>`
+    `<span class="client-tag ${tc[c] ? 'yes' : 'no'}" title="${CLIENT_LABELS[c]}">${CLIENT_LABELS[c]}</span>`
   ).join("");
+
+  const completionsTag = plan.completions_included
+    ? `<span class="client-tag yes" title="Inline completions included">completions</span>` : "";
 
   const modalities = (plan.modalities || []).map(m =>
     `<span class="modality">${MODALITY_LABELS[m] || m}</span>`
@@ -88,66 +138,88 @@ function fmt(plan) {
   const models = (plan.models_included || []).join(", ") || "—";
 
   const notes = [
-    tc.notes ? `<div style="font-size:11px;color:var(--muted);margin-top:4px">${tc.notes}</div>` : "",
     plan.policy_notes ? `<div class="policy-note">⚠ ${plan.policy_notes}</div>` : "",
-    plan.restrictions?.length ? `<div style="font-size:11px;color:var(--muted);margin-top:4px">${plan.restrictions.join(" · ")}</div>` : ""
+    plan.restrictions?.length ? `<div style="font-size:11px;color:var(--muted);margin-top:4px">${plan.restrictions.join(" · ")}</div>` : "",
+    tc.notes ? `<div style="font-size:11px;color:var(--muted);margin-top:4px">${tc.notes}</div>` : "",
   ].filter(Boolean).join("");
 
-  return { price, annualNote, introHtml, rateLimit, tcBadge, clientTags, modalities, models, notes, tc };
+  return `
+    <tr data-category="${plan.category}" data-tc="${tc.supported}" data-pi="${tc.pi}" data-value="${plan.coding_value ?? 0}" data-price="${plan.price_usd_monthly ?? 9999}">
+      <td>
+        <div class="provider-name">${provider.provider}</div>
+        <div class="plan-name">${plan.name}</div>
+      </td>
+      <td><span class="cat-badge ${catClass}">${catLabel}</span></td>
+      <td>
+        <div class="price">${price}</div>
+        ${annualNote}${introHtml}
+      </td>
+      <td>${fmtInteractions(plan)}</td>
+      <td>${fmtCodingIndex(plan.best_coding_index)}</td>
+      <td>${fmtValue(plan.coding_value)}</td>
+      <td>
+        ${tcBadge}
+        <div class="client-grid">${clientTags}${completionsTag}</div>
+      </td>
+      <td><div class="modality-list">${modalities}</div></td>
+      <td style="font-size:11px;color:var(--muted);max-width:160px">${models}</td>
+      <td>${notes}</td>
+    </tr>`;
 }
 
 let activeFilter = "all";
+let activeSort = null;
+let allRows = [];
 
 function render() {
-  const data = window.CODEPLANS_DATA;
   const tbody = document.getElementById("table-body");
-  const rows = [];
   const dates = [];
 
-  for (const [, provider] of Object.entries(data)) {
-    dates.push(provider.updated);
-    for (const plan of provider.plans) {
-      const f = fmt(plan);
+  for (const [, p] of Object.entries(window.CODEPLANS_DATA)) dates.push(p.updated);
 
-      // Filter logic
-      if (activeFilter === "third-party" && !plan.third_party_clients.supported) continue;
-      if (activeFilter === "multimodal" && plan.modalities.length < 3) continue;
+  let rows = allRows.filter(({ provider, plan }) => {
+    if (activeFilter === "model_provider" && plan.category !== "model_provider") return false;
+    if (activeFilter === "coding_platform" && plan.category !== "coding_platform") return false;
+    if (activeFilter === "third-party" && !plan.third_party_clients?.supported) return false;
+    if (activeFilter === "pi" && !plan.third_party_clients?.pi) return false;
+    return true;
+  });
 
-      rows.push(`
-        <tr data-provider="${provider.provider}" data-tc="${plan.third_party_clients.supported}">
-          <td>
-            <div class="provider-name">${provider.provider}</div>
-            <div class="plan-name">${plan.name}</div>
-          </td>
-          <td>
-            <div class="price">${f.price}</div>
-            ${f.annualNote ? `<div class="price-note">${f.annualNote}</div>` : ""}
-            ${f.introHtml}
-          </td>
-          <td>${f.rateLimit}</td>
-          <td>
-            ${f.tcBadge}
-            <div class="client-grid">${f.clientTags}</div>
-          </td>
-          <td><div class="modality-list">${f.modalities}</div></td>
-          <td style="font-size:11px;color:var(--muted);max-width:160px">${f.models}</td>
-          <td>${f.notes}</td>
-        </tr>
-      `);
-    }
+  if (activeSort === "value") {
+    rows = [...rows].sort((a, b) => (b.plan.coding_value ?? -1) - (a.plan.coding_value ?? -1));
+  } else if (activeSort === "price") {
+    rows = [...rows].sort((a, b) => (a.plan.price_usd_monthly ?? 9999) - (b.plan.price_usd_monthly ?? 9999));
   }
 
-  tbody.innerHTML = rows.length ? rows.join("") : `<tr><td colspan="7" style="color:var(--muted);padding:24px">No plans match filter.</td></tr>`;
+  tbody.innerHTML = rows.length
+    ? rows.map(fmtRow).join("")
+    : `<tr><td colspan="10" style="color:var(--muted);padding:24px">No plans match filter.</td></tr>`;
 
   const latest = dates.sort().at(-1);
   if (latest) document.getElementById("updated").textContent = `Updated ${latest}`;
 }
 
-document.querySelectorAll(".filter-btn").forEach(btn => {
+// Init
+allRows = buildRows(window.CODEPLANS_DATA);
+
+document.querySelectorAll(".filter-btn[data-filter]").forEach(btn => {
   btn.addEventListener("click", () => {
-    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".filter-btn[data-filter]").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
     activeFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+document.querySelectorAll(".filter-btn[data-sort]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn[data-sort]").forEach(b => b.classList.remove("active"));
+    if (activeSort === btn.dataset.sort) {
+      activeSort = null;
+    } else {
+      btn.classList.add("active");
+      activeSort = btn.dataset.sort;
+    }
     render();
   });
 });

@@ -2,7 +2,6 @@ import { chromium, type Page } from "playwright";
 
 /** Extract a USD price like $20, $9.99, $200 from a string */
 export function extractPrice(text: string, hint: string): number | null {
-  // Look for the hint word nearby a dollar amount
   const idx = text.toLowerCase().indexOf(hint.toLowerCase());
   if (idx === -1) return null;
   const slice = text.slice(Math.max(0, idx - 60), idx + 120);
@@ -52,17 +51,27 @@ export interface ThirdPartyClients {
   cline: boolean | null;
   kilo: boolean | null;
   roo: boolean | null;
+  pi: boolean | null;
   notes: string;
 }
 
 export interface Plan {
   name: string;
+  category: "model_provider" | "coding_platform";
   price_usd_monthly: number | null;
   price_usd_annual: number | null;
+  // Normalized interaction count (one full agent turn ~4k tokens)
+  interactions_monthly: number | null;
+  interactions_note: string;
+  // Legacy raw metrics (kept for reference)
   requests_per_window: number | null;
   window_hours: number | null;
   tokens_monthly: number | null;
   credits_monthly: number | null;
+  // Completions (inline autocomplete) — separate from interactions
+  completions_included: boolean;
+  // AA benchmark model IDs for quality lookup
+  model_ids: string[];
   models_included: string[];
   modalities: string[];
   third_party_clients: ThirdPartyClients;
@@ -77,4 +86,18 @@ export interface ProviderData {
   updated: string;
   source_urls: string[];
   plans: Plan[];
+}
+
+// Tokens per interaction assumption for normalization
+export const TOKENS_PER_INTERACTION = 4000;
+
+/** Convert windowed requests to monthly interactions */
+export function windowToMonthly(requestsPerWindow: number, windowHours: number): number {
+  const windowsPerMonth = (30 * 24) / windowHours;
+  return Math.round(requestsPerWindow * windowsPerMonth);
+}
+
+/** Convert token budget to monthly interactions */
+export function tokensToMonthly(tokens: number): number {
+  return Math.round(tokens / TOKENS_PER_INTERACTION);
 }

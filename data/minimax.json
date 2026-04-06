@@ -7,12 +7,19 @@
   "plans": [
     {
       "name": "Starter",
+      "category": "model_provider",
       "price_usd_monthly": 10,
       "price_usd_annual": null,
+      "interactions_monthly": 216000,
+      "interactions_note": "1500 requests per 5h window",
       "requests_per_window": 1500,
       "window_hours": 5,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "minimax-m2.7"
+      ],
       "models_included": [
         "MiniMax M2.7"
       ],
@@ -26,6 +33,7 @@
         "cline": true,
         "kilo": true,
         "roo": true,
+        "pi": true,
         "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
       },
       "restrictions": [],
@@ -35,12 +43,19 @@
     },
     {
       "name": "Plus",
+      "category": "model_provider",
       "price_usd_monthly": 20,
       "price_usd_annual": null,
+      "interactions_monthly": 648000,
+      "interactions_note": "4500 requests per 5h window",
       "requests_per_window": 4500,
       "window_hours": 5,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "minimax-m2.7"
+      ],
       "models_included": [
         "MiniMax M2.7"
       ],
@@ -56,6 +71,7 @@
         "cline": true,
         "kilo": true,
         "roo": true,
+        "pi": true,
         "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
       },
       "restrictions": [
@@ -68,12 +84,19 @@
     },
     {
       "name": "Max",
+      "category": "model_provider",
       "price_usd_monthly": 50,
       "price_usd_annual": null,
+      "interactions_monthly": 2160000,
+      "interactions_note": "15000 requests per 5h window",
       "requests_per_window": 15000,
       "window_hours": 5,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "minimax-m2.7"
+      ],
       "models_included": [
         "MiniMax M2.7"
       ],
@@ -91,6 +114,7 @@
         "cline": true,
         "kilo": true,
         "roo": true,
+        "pi": true,
         "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
       },
       "restrictions": [
@@ -105,12 +129,19 @@
     },
     {
       "name": "Plus Highspeed",
+      "category": "model_provider",
       "price_usd_monthly": 40,
       "price_usd_annual": null,
+      "interactions_monthly": 648000,
+      "interactions_note": "4500 requests per 5h window",
       "requests_per_window": 4500,
       "window_hours": 5,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "minimax-m2.7"
+      ],
       "models_included": [
         "MiniMax M2.7-Highspeed"
       ],
@@ -126,6 +157,7 @@
         "cline": true,
         "kilo": true,
         "roo": true,
+        "pi": true,
         "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
       },
       "restrictions": [
@@ -138,12 +170,19 @@
     },
     {
       "name": "Max Highspeed",
+      "category": "model_provider",
       "price_usd_monthly": 80,
       "price_usd_annual": null,
+      "interactions_monthly": 2160000,
+      "interactions_note": "15000 requests per 5h window",
       "requests_per_window": 15000,
       "window_hours": 5,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "minimax-m2.7"
+      ],
       "models_included": [
         "MiniMax M2.7-Highspeed"
       ],
@@ -161,6 +200,7 @@
         "cline": true,
         "kilo": true,
         "roo": true,
+        "pi": true,
         "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
       },
       "restrictions": [
@@ -175,12 +215,19 @@
     },
     {
       "name": "Ultra Highspeed",
+      "category": "model_provider",
       "price_usd_monthly": 150,
       "price_usd_annual": null,
+      "interactions_monthly": 4320000,
+      "interactions_note": "30000 requests per 5h window",
       "requests_per_window": 30000,
       "window_hours": 5,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "minimax-m2.7"
+      ],
       "models_included": [
         "MiniMax M2.7-Highspeed"
       ],
@@ -198,6 +245,7 @@
         "cline": true,
         "kilo": true,
         "roo": true,
+        "pi": true,
         "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
       },
       "restrictions": [

@@ -11,12 +11,12 @@ const THIRD_PARTY = {
   cline: false,
   kilo: false,
   roo: false,
+  pi: false,
   notes: "Blocked as of April 4 2026. Subscription OAuth tokens no longer work in third-party clients. API access required separately.",
 };
 
 const POLICY = "Anthropic blocked subscription OAuth tokens in third-party clients (OpenClaw, Cline, Kilo, Roo etc.) on April 4 2026, citing unsustainable compute costs.";
 
-// Known prices as fallbacks — scraped values override if found
 const KNOWN: Record<string, number> = {
   Pro: 20,
   "Max 5x": 100,
@@ -30,14 +30,11 @@ export async function scrape(): Promise<ProviderData> {
     return page.innerText("body");
   });
 
-  // Find price immediately after a plan heading — look for "$N\n" or "$N/month" pattern
-  // Anthropic pricing page lists: plan name, then price, then features
   function price(planName: string, fallback: number): number {
     const re = new RegExp(planName.replace(/\s/g, "\\s*") + "[\\s\\S]{0,60}?\\$(\\d+)", "i");
     const m = text.match(re);
     if (m) {
       const v = parseInt(m[1], 10);
-      // Sanity check — prices should be reasonable
       if (v >= 1 && v <= 500) return v;
     }
     return fallback;
@@ -50,12 +47,17 @@ export async function scrape(): Promise<ProviderData> {
     plans: [
       {
         name: "Pro",
+        category: "model_provider",
         price_usd_monthly: price("Pro", KNOWN.Pro),
         price_usd_annual: null,
+        interactions_monthly: null,
+        interactions_note: "Soft limit, no hard cap published",
         requests_per_window: null,
         window_hours: null,
         tokens_monthly: null,
         credits_monthly: null,
+        completions_included: false,
+        model_ids: ["claude-sonnet-4.6-non-reasoning-low-effort"],
         models_included: ["claude-sonnet-4-6"],
         modalities: ["text", "code", "image_input", "file_upload"],
         third_party_clients: THIRD_PARTY,
@@ -66,12 +68,17 @@ export async function scrape(): Promise<ProviderData> {
       },
       {
         name: "Max 5x",
+        category: "model_provider",
         price_usd_monthly: price("Max", KNOWN["Max 5x"]),
         price_usd_annual: null,
+        interactions_monthly: null,
+        interactions_note: "5× Pro usage, no hard cap published",
         requests_per_window: null,
         window_hours: null,
         tokens_monthly: null,
         credits_monthly: null,
+        completions_included: false,
+        model_ids: ["claude-sonnet-4.6-non-reasoning-low-effort", "claude-opus-4.6-non-reasoning-high-effort"],
         models_included: ["claude-sonnet-4-6", "claude-opus-4-6"],
         modalities: ["text", "code", "image_input", "file_upload"],
         third_party_clients: THIRD_PARTY,
@@ -82,12 +89,17 @@ export async function scrape(): Promise<ProviderData> {
       },
       {
         name: "Max 20x",
+        category: "model_provider",
         price_usd_monthly: KNOWN["Max 20x"],
         price_usd_annual: null,
+        interactions_monthly: null,
+        interactions_note: "20× Pro usage, no hard cap published",
         requests_per_window: null,
         window_hours: null,
         tokens_monthly: null,
         credits_monthly: null,
+        completions_included: false,
+        model_ids: ["claude-sonnet-4.6-non-reasoning-low-effort", "claude-opus-4.6-non-reasoning-high-effort"],
         models_included: ["claude-sonnet-4-6", "claude-opus-4-6"],
         modalities: ["text", "code", "image_input", "file_upload"],
         third_party_clients: THIRD_PARTY,
@@ -98,12 +110,17 @@ export async function scrape(): Promise<ProviderData> {
       },
       {
         name: "Team",
+        category: "model_provider",
         price_usd_monthly: price("Team", KNOWN.Team),
         price_usd_annual: null,
+        interactions_monthly: null,
+        interactions_note: "Per-user, soft limit",
         requests_per_window: null,
         window_hours: null,
         tokens_monthly: null,
         credits_monthly: null,
+        completions_included: false,
+        model_ids: ["claude-sonnet-4.6-non-reasoning-low-effort", "claude-opus-4.6-non-reasoning-high-effort"],
         models_included: ["claude-sonnet-4-6", "claude-opus-4-6"],
         modalities: ["text", "code", "image_input", "file_upload"],
         third_party_clients: THIRD_PARTY,

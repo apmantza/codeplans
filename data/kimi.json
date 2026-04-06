@@ -7,12 +7,19 @@
   "plans": [
     {
       "name": "Starter",
+      "category": "model_provider",
       "price_usd_monthly": 9,
       "price_usd_annual": 9,
+      "interactions_monthly": 2500,
+      "interactions_note": "10M tokens/mo ÷ 4k per interaction",
       "requests_per_window": null,
       "window_hours": null,
       "tokens_monthly": 10000000,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "kimi-k2"
+      ],
       "models_included": [
         "Kimi K2"
       ],
@@ -27,6 +34,7 @@
         "cline": true,
         "kilo": true,
         "roo": true,
+        "pi": true,
         "notes": "Via Moonshot API and OpenRouter."
       },
       "restrictions": [
@@ -38,12 +46,19 @@
     },
     {
       "name": "Ultra",
+      "category": "model_provider",
       "price_usd_monthly": 49,
       "price_usd_annual": 399,
+      "interactions_monthly": 17500,
+      "interactions_note": "70M tokens/mo ÷ 4k per interaction",
       "requests_per_window": null,
       "window_hours": null,
       "tokens_monthly": 70000000,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "kimi-k2"
+      ],
       "models_included": [
         "Kimi K2"
       ],
@@ -58,6 +73,7 @@
         "cline": true,
         "kilo": true,
         "roo": true,
+        "pi": true,
         "notes": "Via Moonshot API and OpenRouter."
       },
       "restrictions": [

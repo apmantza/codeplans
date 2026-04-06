@@ -7,12 +7,19 @@
   "plans": [
     {
       "name": "Lite",
+      "category": "model_provider",
       "price_usd_monthly": 6,
       "price_usd_annual": null,
+      "interactions_monthly": 15000,
+      "interactions_note": "60M credits/mo ÷ 4k per interaction",
       "requests_per_window": null,
       "window_hours": null,
       "tokens_monthly": null,
       "credits_monthly": 60,
+      "completions_included": false,
+      "model_ids": [
+        "mimo-v2-pro"
+      ],
       "models_included": [
         "MiMo-V2-Pro",
         "MiMo-V2-Omni",
@@ -31,6 +38,7 @@
         "cline": true,
         "kilo": true,
         "roo": false,
+        "pi": false,
         "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code, KiloCode."
       },
       "restrictions": [],
@@ -40,12 +48,19 @@
     },
     {
       "name": "Standard",
+      "category": "model_provider",
       "price_usd_monthly": 16,
       "price_usd_annual": null,
+      "interactions_monthly": 50000,
+      "interactions_note": "200M credits/mo ÷ 4k per interaction",
       "requests_per_window": null,
       "window_hours": null,
       "tokens_monthly": null,
       "credits_monthly": 200,
+      "completions_included": false,
+      "model_ids": [
+        "mimo-v2-pro"
+      ],
       "models_included": [
         "MiMo-V2-Pro",
         "MiMo-V2-Omni",
@@ -64,6 +79,7 @@
         "cline": true,
         "kilo": true,
         "roo": false,
+        "pi": false,
         "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code, KiloCode."
       },
       "restrictions": [],
@@ -73,12 +89,19 @@
     },
     {
       "name": "Pro",
+      "category": "model_provider",
       "price_usd_monthly": 50,
       "price_usd_annual": null,
+      "interactions_monthly": 175000,
+      "interactions_note": "700M credits/mo ÷ 4k per interaction",
       "requests_per_window": null,
       "window_hours": null,
       "tokens_monthly": null,
       "credits_monthly": 700,
+      "completions_included": false,
+      "model_ids": [
+        "mimo-v2-pro"
+      ],
       "models_included": [
         "MiMo-V2-Pro",
         "MiMo-V2-Omni",
@@ -97,6 +120,7 @@
         "cline": true,
         "kilo": true,
         "roo": false,
+        "pi": false,
         "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code, KiloCode."
       },
       "restrictions": [],
@@ -106,12 +130,19 @@
     },
     {
       "name": "Max",
+      "category": "model_provider",
       "price_usd_monthly": 100,
       "price_usd_annual": null,
+      "interactions_monthly": 400000,
+      "interactions_note": "1600M credits/mo ÷ 4k per interaction",
       "requests_per_window": null,
       "window_hours": null,
       "tokens_monthly": null,
       "credits_monthly": 1600,
+      "completions_included": false,
+      "model_ids": [
+        "mimo-v2-pro"
+      ],
       "models_included": [
         "MiMo-V2-Pro",
         "MiMo-V2-Omni",
@@ -130,6 +161,7 @@
         "cline": true,
         "kilo": true,
         "roo": false,
+        "pi": false,
         "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code, KiloCode."
       },
       "restrictions": [],

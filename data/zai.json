@@ -8,12 +8,19 @@
   "plans": [
     {
       "name": "Lite",
+      "category": "model_provider",
       "price_usd_monthly": 90,
       "price_usd_annual": null,
+      "interactions_monthly": 17280,
+      "interactions_note": "120 requests per 5h window",
       "requests_per_window": 120,
       "window_hours": 5,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "glm-5-non-reasoning"
+      ],
       "models_included": [
         "GLM-5",
         "GLM-4.7-Flash",
@@ -29,6 +36,7 @@
         "cline": true,
         "kilo": true,
         "roo": true,
+        "pi": true,
         "notes": "OpenAI-compatible API. Works with all major coding clients."
       },
       "restrictions": [],
@@ -38,12 +46,20 @@
     },
     {
       "name": "Pro",
+      "category": "model_provider",
       "price_usd_monthly": 90,
       "price_usd_annual": null,
+      "interactions_monthly": 86400,
+      "interactions_note": "600 requests per 5h window",
       "requests_per_window": 600,
       "window_hours": 5,
       "tokens_monthly": null,
       "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "glm-5-non-reasoning",
+        "glm-5-reasoning"
+      ],
       "models_included": [
         "GLM-5",
         "GLM-5.1",
@@ -60,6 +76,7 @@
         "cline": true,
         "kilo": true,
         "roo": true,
+        "pi": true,
         "notes": "OpenAI-compatible API. Works with all major coding clients."
       },
       "restrictions": [],

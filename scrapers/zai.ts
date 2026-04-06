@@ -1,4 +1,4 @@
-import { withPage, today, type ProviderData } from "./base.ts";
+import { withPage, today, type ProviderData, windowToMonthly } from "./base.ts";
 
 const SOURCE_URLS = [
   "https://z.ai/subscribe",
@@ -11,10 +11,10 @@ const THIRD_PARTY = {
   cline: true,
   kilo: true,
   roo: true,
+  pi: true,
   notes: "OpenAI-compatible API. Works with all major coding clients.",
 };
 
-// Known values — scraper overrides if found
 const KNOWN = {
   Lite:  { intro: 3,  regular: 6,  requests: 120 },
   Pro:   { intro: 15, regular: 30, requests: 600 },
@@ -26,23 +26,16 @@ export async function scrape(): Promise<ProviderData> {
     return page.innerText("body");
   });
 
-  // z.ai shows both intro and regular price — intro is struck-through or shown as "was $X"
-  // Pattern: look for the plan section and grab the FIRST (intro) and LAST (regular) prices
   function planPrices(name: string, fallback: { intro: number; regular: number }) {
     const idx = text.search(new RegExp("\\b" + name + "\\b", "i"));
     if (idx === -1) return fallback;
-    // Grab a generous window around the plan name
     const slice = text.slice(idx, idx + 500);
     const prices = [...slice.matchAll(/\$(\d+)/g)]
       .map(m => parseInt(m[1], 10))
-      .filter(p => p < 200); // ignore clearly wrong values
+      .filter(p => p < 200);
     if (prices.length === 0) return fallback;
     if (prices.length === 1) return { intro: prices[0], regular: prices[0] };
-    // Intro is lower, regular is higher
-    return {
-      intro: Math.min(...prices),
-      regular: Math.max(...prices),
-    };
+    return { intro: Math.min(...prices), regular: Math.max(...prices) };
   }
 
   function requests(name: string, fallback: number): number {
@@ -55,6 +48,8 @@ export async function scrape(): Promise<ProviderData> {
 
   const lite = planPrices("Lite", KNOWN.Lite);
   const pro  = planPrices("Pro",  KNOWN.Pro);
+  const liteReq = requests("Lite", KNOWN.Lite.requests);
+  const proReq  = requests("Pro",  KNOWN.Pro.requests);
 
   return {
     provider: "z.ai (GLM)",
@@ -63,37 +58,45 @@ export async function scrape(): Promise<ProviderData> {
     plans: [
       {
         name: "Lite",
+        category: "model_provider",
         price_usd_monthly: lite.regular,
         price_usd_annual: null,
-        requests_per_window: requests("Lite", KNOWN.Lite.requests),
+        interactions_monthly: windowToMonthly(liteReq, 5),
+        interactions_note: `${liteReq} requests per 5h window`,
+        requests_per_window: liteReq,
         window_hours: 5,
         tokens_monthly: null,
         credits_monthly: null,
+        completions_included: false,
+        model_ids: ["glm-5-non-reasoning"],
         models_included: ["GLM-5", "GLM-4.7-Flash", "GLM-4.5-Flash"],
         modalities: ["text", "code"],
         third_party_clients: THIRD_PARTY,
         restrictions: [],
         policy_notes: "",
         intro_pricing: lite.intro < lite.regular,
-        intro_notes: lite.intro < lite.regular
-          ? `$${lite.intro}/mo first cycle, then $${lite.regular}/mo` : "",
+        intro_notes: lite.intro < lite.regular ? `$${lite.intro}/mo first cycle, then $${lite.regular}/mo` : "",
       },
       {
         name: "Pro",
+        category: "model_provider",
         price_usd_monthly: pro.regular,
         price_usd_annual: null,
-        requests_per_window: requests("Pro", KNOWN.Pro.requests),
+        interactions_monthly: windowToMonthly(proReq, 5),
+        interactions_note: `${proReq} requests per 5h window`,
+        requests_per_window: proReq,
         window_hours: 5,
         tokens_monthly: null,
         credits_monthly: null,
+        completions_included: false,
+        model_ids: ["glm-5-non-reasoning", "glm-5-reasoning"],
         models_included: ["GLM-5", "GLM-5.1", "GLM-4.7-Flash", "GLM-4.5-Flash"],
         modalities: ["text", "code"],
         third_party_clients: THIRD_PARTY,
         restrictions: [],
         policy_notes: "",
         intro_pricing: pro.intro < pro.regular,
-        intro_notes: pro.intro < pro.regular
-          ? `$${pro.intro}/mo first cycle, then $${pro.regular}/mo` : "",
+        intro_notes: pro.intro < pro.regular ? `$${pro.intro}/mo first cycle, then $${pro.regular}/mo` : "",
       },
     ],
   };

@@ -8,22 +8,16 @@ const THIRD_PARTY = {
   cline: true,
   kilo: true,
   roo: true,
+  pi: true,
   notes: "Via OpenAI API key. All major clients supported.",
 };
 
 export async function scrape(): Promise<ProviderData> {
-  // chatgpt.com/pricing never reaches networkidle — use domcontentloaded + fixed wait
   const text = await withPage(SOURCE_URLS[0], async (page) => {
     await page.waitForTimeout(5000);
     return page.innerText("body");
   }, "domcontentloaded");
 
-  // Prices appear as "$20/month" or "$20" near plan names
-  // Extract all "$N" occurrences in order — pricing pages list them sequentially
-  const allPrices = [...text.matchAll(/\$(\d+)(?:\/mo|\s*per\s*month)?/gi)]
-    .map(m => parseInt(m[1], 10));
-
-  // Known fallbacks — update if scrape finds them
   const knownPrices: Record<string, number> = { Free: 0, Go: 8, Plus: 20, Pro: 200 };
 
   function price(name: string, fallback: number): number {
@@ -41,12 +35,17 @@ export async function scrape(): Promise<ProviderData> {
     plans: [
       {
         name: "Free",
+        category: "model_provider",
         price_usd_monthly: 0,
         price_usd_annual: null,
+        interactions_monthly: null,
+        interactions_note: "Limited, unspecified",
         requests_per_window: null,
         window_hours: null,
         tokens_monthly: null,
         credits_monthly: null,
+        completions_included: false,
+        model_ids: ["gpt-4o-mini"],
         models_included: ["gpt-4o-mini"],
         modalities: ["text", "code"],
         third_party_clients: THIRD_PARTY,
@@ -57,12 +56,17 @@ export async function scrape(): Promise<ProviderData> {
       },
       {
         name: "Go",
-        price_usd_monthly: price("\\bGo\\b", 8),
+        category: "model_provider",
+        price_usd_monthly: price("\\bGo\\b", knownPrices.Go),
         price_usd_annual: null,
+        interactions_monthly: null,
+        interactions_note: "Soft limit",
         requests_per_window: null,
         window_hours: null,
         tokens_monthly: null,
         credits_monthly: null,
+        completions_included: false,
+        model_ids: ["gpt-4o-chatgpt"],
         models_included: ["gpt-4o"],
         modalities: ["text", "code", "image_input"],
         third_party_clients: THIRD_PARTY,
@@ -73,13 +77,18 @@ export async function scrape(): Promise<ProviderData> {
       },
       {
         name: "Plus",
-        price_usd_monthly: price("\\bPlus\\b", 20),
+        category: "model_provider",
+        price_usd_monthly: price("\\bPlus\\b", knownPrices.Plus),
         price_usd_annual: null,
+        interactions_monthly: null,
+        interactions_note: "Soft limit",
         requests_per_window: null,
         window_hours: null,
         tokens_monthly: null,
         credits_monthly: null,
-        models_included: ["gpt-4o", "o3"],
+        completions_included: false,
+        model_ids: ["gpt-4o-chatgpt", "gpt-5-chatgpt"],
+        models_included: ["gpt-4o", "gpt-5"],
         modalities: ["text", "code", "image_input", "image_gen", "audio", "video"],
         third_party_clients: THIRD_PARTY,
         restrictions: [],
@@ -89,13 +98,18 @@ export async function scrape(): Promise<ProviderData> {
       },
       {
         name: "Pro",
-        price_usd_monthly: price("\\bPro\\b", 200),
+        category: "model_provider",
+        price_usd_monthly: price("\\bPro\\b", knownPrices.Pro),
         price_usd_annual: null,
+        interactions_monthly: null,
+        interactions_note: "Unlimited access to all models",
         requests_per_window: null,
         window_hours: null,
         tokens_monthly: null,
         credits_monthly: null,
-        models_included: ["gpt-4o", "o3", "o3-pro"],
+        completions_included: false,
+        model_ids: ["gpt-4o-chatgpt", "gpt-5-chatgpt", "gpt-5-codex-high"],
+        models_included: ["gpt-4o", "gpt-5", "gpt-5-codex"],
         modalities: ["text", "code", "image_input", "image_gen", "audio", "video"],
         third_party_clients: THIRD_PARTY,
         restrictions: [],

@@ -1,0 +1,142 @@
+{
+  "provider": "Windsurf",
+  "updated": "2026-04-06",
+  "source_urls": [
+    "https://windsurf.com/pricing"
+  ],
+  "plans": [
+    {
+      "name": "Free",
+      "category": "coding_platform",
+      "price_usd_monthly": 0,
+      "price_usd_annual": null,
+      "interactions_monthly": 25,
+      "interactions_note": "~25 free flow action credits/mo",
+      "requests_per_window": null,
+      "window_hours": null,
+      "tokens_monthly": null,
+      "credits_monthly": null,
+      "completions_included": true,
+      "model_ids": [
+        "claude-sonnet-4.6-non-reasoning-low-effort",
+        "gpt-4o-chatgpt"
+      ],
+      "models_included": [
+        "Claude Sonnet",
+        "GPT-4o (limited)"
+      ],
+      "modalities": [
+        "text",
+        "code",
+        "image_input"
+      ],
+      "third_party_clients": {
+        "supported": false,
+        "openclaw": false,
+        "cline": false,
+        "kilo": false,
+        "roo": false,
+        "pi": false,
+        "notes": "Windsurf is a standalone IDE. Model access is bundled — not exposed via third-party clients."
+      },
+      "restrictions": [
+        "Limited credits",
+        "Windsurf IDE only"
+      ],
+      "policy_notes": "",
+      "intro_pricing": false,
+      "intro_notes": ""
+    },
+    {
+      "name": "Pro",
+      "category": "coding_platform",
+      "price_usd_monthly": 20,
+      "price_usd_annual": null,
+      "interactions_monthly": 500,
+      "interactions_note": "500 flow action credits/mo",
+      "requests_per_window": null,
+      "window_hours": null,
+      "tokens_monthly": null,
+      "credits_monthly": null,
+      "completions_included": true,
+      "model_ids": [
+        "claude-sonnet-4.6-non-reasoning-low-effort",
+        "claude-opus-4.6-non-reasoning-high-effort",
+        "gpt-4o-chatgpt",
+        "gemini-2.5-pro"
+      ],
+      "models_included": [
+        "Claude Sonnet",
+        "Claude Opus",
+        "GPT-4o",
+        "Gemini 2.5 Pro"
+      ],
+      "modalities": [
+        "text",
+        "code",
+        "image_input"
+      ],
+      "third_party_clients": {
+        "supported": false,
+        "openclaw": false,
+        "cline": false,
+        "kilo": false,
+        "roo": false,
+        "pi": false,
+        "notes": "Windsurf is a standalone IDE. Model access is bundled — not exposed via third-party clients."
+      },
+      "restrictions": [
+        "Windsurf IDE only"
+      ],
+      "policy_notes": "",
+      "intro_pricing": false,
+      "intro_notes": ""
+    },
+    {
+      "name": "Teams",
+      "category": "coding_platform",
+      "price_usd_monthly": 40,
+      "price_usd_annual": null,
+      "interactions_monthly": 1000,
+      "interactions_note": "1000 flow action credits/mo per user",
+      "requests_per_window": null,
+      "window_hours": null,
+      "tokens_monthly": null,
+      "credits_monthly": null,
+      "completions_included": true,
+      "model_ids": [
+        "claude-sonnet-4.6-non-reasoning-low-effort",
+        "claude-opus-4.6-non-reasoning-high-effort",
+        "gpt-4o-chatgpt",
+        "gemini-2.5-pro"
+      ],
+      "models_included": [
+        "Claude Sonnet",
+        "Claude Opus",
+        "GPT-4o",
+        "Gemini 2.5 Pro"
+      ],
+      "modalities": [
+        "text",
+        "code",
+        "image_input"
+      ],
+      "third_party_clients": {
+        "supported": false,
+        "openclaw": false,
+        "cline": false,
+        "kilo": false,
+        "roo": false,
+        "pi": false,
+        "notes": "Windsurf is a standalone IDE. Model access is bundled — not exposed via third-party clients."
+      },
+      "restrictions": [
+        "Per-user pricing",
+        "Windsurf IDE only"
+      ],
+      "policy_notes": "",
+      "intro_pricing": false,
+      "intro_notes": ""
+    }
+  ]
+}

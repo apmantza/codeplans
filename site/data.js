@@ -10,12 +10,19 @@ window.CODEPLANS_DATA = {
     "plans": [
       {
         "name": "Pro",
-        "price_usd_monthly": 17,
+        "category": "model_provider",
+        "price_usd_monthly": 20,
         "price_usd_annual": null,
+        "interactions_monthly": null,
+        "interactions_note": "Soft limit, no hard cap published",
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "claude-sonnet-4.6-non-reasoning-low-effort"
+        ],
         "models_included": [
           "claude-sonnet-4-6"
         ],
@@ -31,6 +38,7 @@ window.CODEPLANS_DATA = {
           "cline": false,
           "kilo": false,
           "roo": false,
+          "pi": false,
           "notes": "Blocked as of April 4 2026. Subscription OAuth tokens no longer work in third-party clients. API access required separately."
         },
         "restrictions": [
@@ -38,16 +46,26 @@ window.CODEPLANS_DATA = {
         ],
         "policy_notes": "Anthropic blocked subscription OAuth tokens in third-party clients (OpenClaw, Cline, Kilo, Roo etc.) on April 4 2026, citing unsustainable compute costs.",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 43,
+        "coding_value": null
       },
       {
         "name": "Max 5x",
+        "category": "model_provider",
         "price_usd_monthly": 100,
         "price_usd_annual": null,
+        "interactions_monthly": null,
+        "interactions_note": "5× Pro usage, no hard cap published",
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "claude-sonnet-4.6-non-reasoning-low-effort",
+          "claude-opus-4.6-non-reasoning-high-effort"
+        ],
         "models_included": [
           "claude-sonnet-4-6",
           "claude-opus-4-6"
@@ -64,6 +82,7 @@ window.CODEPLANS_DATA = {
           "cline": false,
           "kilo": false,
           "roo": false,
+          "pi": false,
           "notes": "Blocked as of April 4 2026. Subscription OAuth tokens no longer work in third-party clients. API access required separately."
         },
         "restrictions": [
@@ -72,16 +91,26 @@ window.CODEPLANS_DATA = {
         ],
         "policy_notes": "Anthropic blocked subscription OAuth tokens in third-party clients (OpenClaw, Cline, Kilo, Roo etc.) on April 4 2026, citing unsustainable compute costs.",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 47.6,
+        "coding_value": null
       },
       {
         "name": "Max 20x",
+        "category": "model_provider",
         "price_usd_monthly": 200,
         "price_usd_annual": null,
+        "interactions_monthly": null,
+        "interactions_note": "20× Pro usage, no hard cap published",
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "claude-sonnet-4.6-non-reasoning-low-effort",
+          "claude-opus-4.6-non-reasoning-high-effort"
+        ],
         "models_included": [
           "claude-sonnet-4-6",
           "claude-opus-4-6"
@@ -98,6 +127,7 @@ window.CODEPLANS_DATA = {
           "cline": false,
           "kilo": false,
           "roo": false,
+          "pi": false,
           "notes": "Blocked as of April 4 2026. Subscription OAuth tokens no longer work in third-party clients. API access required separately."
         },
         "restrictions": [
@@ -106,16 +136,26 @@ window.CODEPLANS_DATA = {
         ],
         "policy_notes": "Anthropic blocked subscription OAuth tokens in third-party clients (OpenClaw, Cline, Kilo, Roo etc.) on April 4 2026, citing unsustainable compute costs.",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 47.6,
+        "coding_value": null
       },
       {
         "name": "Team",
+        "category": "model_provider",
         "price_usd_monthly": 30,
         "price_usd_annual": null,
+        "interactions_monthly": null,
+        "interactions_note": "Per-user, soft limit",
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "claude-sonnet-4.6-non-reasoning-low-effort",
+          "claude-opus-4.6-non-reasoning-high-effort"
+        ],
         "models_included": [
           "claude-sonnet-4-6",
           "claude-opus-4-6"
@@ -132,6 +172,7 @@ window.CODEPLANS_DATA = {
           "cline": false,
           "kilo": false,
           "roo": false,
+          "pi": false,
           "notes": "Blocked as of April 4 2026. Subscription OAuth tokens no longer work in third-party clients. API access required separately."
         },
         "restrictions": [
@@ -140,7 +181,457 @@ window.CODEPLANS_DATA = {
         ],
         "policy_notes": "Anthropic blocked subscription OAuth tokens in third-party clients (OpenClaw, Cline, Kilo, Roo etc.) on April 4 2026, citing unsustainable compute costs.",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 47.6,
+        "coding_value": null
+      }
+    ]
+  },
+  "copilot": {
+    "provider": "GitHub Copilot",
+    "updated": "2026-04-06",
+    "source_urls": [
+      "https://github.com/features/copilot"
+    ],
+    "plans": [
+      {
+        "name": "Free",
+        "category": "coding_platform",
+        "price_usd_monthly": 0,
+        "price_usd_annual": null,
+        "interactions_monthly": 50,
+        "interactions_note": "50 premium model requests/mo + unlimited GPT-4o-mini chat",
+        "requests_per_window": null,
+        "window_hours": null,
+        "tokens_monthly": null,
+        "credits_monthly": null,
+        "completions_included": true,
+        "model_ids": [
+          "gpt-4o-chatgpt",
+          "claude-sonnet-4.6-non-reasoning-low-effort"
+        ],
+        "models_included": [
+          "GPT-4o",
+          "Claude Sonnet (premium)"
+        ],
+        "modalities": [
+          "text",
+          "code"
+        ],
+        "third_party_clients": {
+          "supported": true,
+          "openclaw": false,
+          "cline": false,
+          "kilo": false,
+          "roo": false,
+          "pi": false,
+          "notes": "Works in VS Code, JetBrains, Neovim, and other editors via official extensions. Not compatible with OpenClaw/Cline/pi-style clients."
+        },
+        "restrictions": [
+          "50 premium requests/mo",
+          "Editor extensions only"
+        ],
+        "policy_notes": "",
+        "intro_pricing": false,
+        "intro_notes": "",
+        "best_coding_index": 43,
+        "coding_value": null
+      },
+      {
+        "name": "Pro",
+        "category": "coding_platform",
+        "price_usd_monthly": 10,
+        "price_usd_annual": null,
+        "interactions_monthly": 300,
+        "interactions_note": "300 premium model requests/mo + unlimited standard",
+        "requests_per_window": null,
+        "window_hours": null,
+        "tokens_monthly": null,
+        "credits_monthly": null,
+        "completions_included": true,
+        "model_ids": [
+          "gpt-4o-chatgpt",
+          "claude-sonnet-4.6-non-reasoning-low-effort",
+          "gemini-2.5-pro"
+        ],
+        "models_included": [
+          "GPT-4o",
+          "Claude Sonnet",
+          "Gemini 2.5 Pro"
+        ],
+        "modalities": [
+          "text",
+          "code",
+          "image_input"
+        ],
+        "third_party_clients": {
+          "supported": true,
+          "openclaw": false,
+          "cline": false,
+          "kilo": false,
+          "roo": false,
+          "pi": false,
+          "notes": "Works in VS Code, JetBrains, Neovim, and other editors via official extensions. Not compatible with OpenClaw/Cline/pi-style clients."
+        },
+        "restrictions": [
+          "300 premium requests/mo",
+          "Editor extensions only"
+        ],
+        "policy_notes": "",
+        "intro_pricing": false,
+        "intro_notes": "",
+        "best_coding_index": 43,
+        "coding_value": 1290
+      },
+      {
+        "name": "Pro+",
+        "category": "coding_platform",
+        "price_usd_monthly": 39,
+        "price_usd_annual": null,
+        "interactions_monthly": 1500,
+        "interactions_note": "1500 premium model requests/mo + unlimited standard",
+        "requests_per_window": null,
+        "window_hours": null,
+        "tokens_monthly": null,
+        "credits_monthly": null,
+        "completions_included": true,
+        "model_ids": [
+          "gpt-4o-chatgpt",
+          "claude-opus-4.6-non-reasoning-high-effort",
+          "claude-sonnet-4.6-non-reasoning-low-effort",
+          "gemini-2.5-pro",
+          "gpt-5-chatgpt"
+        ],
+        "models_included": [
+          "GPT-4o",
+          "Claude Opus",
+          "Claude Sonnet",
+          "Gemini 2.5 Pro",
+          "GPT-5 (when available)"
+        ],
+        "modalities": [
+          "text",
+          "code",
+          "image_input"
+        ],
+        "third_party_clients": {
+          "supported": true,
+          "openclaw": false,
+          "cline": false,
+          "kilo": false,
+          "roo": false,
+          "pi": false,
+          "notes": "Works in VS Code, JetBrains, Neovim, and other editors via official extensions. Not compatible with OpenClaw/Cline/pi-style clients."
+        },
+        "restrictions": [
+          "1500 premium requests/mo",
+          "Editor extensions only"
+        ],
+        "policy_notes": "",
+        "intro_pricing": false,
+        "intro_notes": "",
+        "best_coding_index": 47.6,
+        "coding_value": 1831
+      },
+      {
+        "name": "Business",
+        "category": "coding_platform",
+        "price_usd_monthly": 19,
+        "price_usd_annual": null,
+        "interactions_monthly": 300,
+        "interactions_note": "300 premium model requests/mo per user",
+        "requests_per_window": null,
+        "window_hours": null,
+        "tokens_monthly": null,
+        "credits_monthly": null,
+        "completions_included": true,
+        "model_ids": [
+          "gpt-4o-chatgpt",
+          "claude-sonnet-4.6-non-reasoning-low-effort",
+          "gemini-2.5-pro"
+        ],
+        "models_included": [
+          "GPT-4o",
+          "Claude Sonnet",
+          "Gemini 2.5 Pro"
+        ],
+        "modalities": [
+          "text",
+          "code",
+          "image_input"
+        ],
+        "third_party_clients": {
+          "supported": true,
+          "openclaw": false,
+          "cline": false,
+          "kilo": false,
+          "roo": false,
+          "pi": false,
+          "notes": "Works in VS Code, JetBrains, Neovim, and other editors via official extensions. Not compatible with OpenClaw/Cline/pi-style clients."
+        },
+        "restrictions": [
+          "Per-user pricing",
+          "Editor extensions only"
+        ],
+        "policy_notes": "",
+        "intro_pricing": false,
+        "intro_notes": "",
+        "best_coding_index": 43,
+        "coding_value": 679
+      }
+    ]
+  },
+  "cursor": {
+    "provider": "Cursor",
+    "updated": "2026-04-06",
+    "source_urls": [
+      "https://cursor.com/pricing"
+    ],
+    "plans": [
+      {
+        "name": "Hobby",
+        "category": "coding_platform",
+        "price_usd_monthly": 0,
+        "price_usd_annual": null,
+        "interactions_monthly": 50,
+        "interactions_note": "50 slow requests/mo (free tier)",
+        "requests_per_window": null,
+        "window_hours": null,
+        "tokens_monthly": null,
+        "credits_monthly": null,
+        "completions_included": true,
+        "model_ids": [
+          "claude-sonnet-4.6-non-reasoning-low-effort",
+          "gpt-4o-chatgpt",
+          "gemini-2.5-flash-non-reasoning"
+        ],
+        "models_included": [
+          "Claude Sonnet",
+          "GPT-4o",
+          "Gemini 2.5 Flash"
+        ],
+        "modalities": [
+          "text",
+          "code",
+          "image_input"
+        ],
+        "third_party_clients": {
+          "supported": false,
+          "openclaw": false,
+          "cline": false,
+          "kilo": false,
+          "roo": false,
+          "pi": false,
+          "notes": "Cursor is a standalone IDE. Model access is bundled — not exposed via API or third-party clients."
+        },
+        "restrictions": [
+          "50 slow requests/mo",
+          "Cursor IDE only"
+        ],
+        "policy_notes": "",
+        "intro_pricing": false,
+        "intro_notes": "",
+        "best_coding_index": 43,
+        "coding_value": null
+      },
+      {
+        "name": "Pro",
+        "category": "coding_platform",
+        "price_usd_monthly": 20,
+        "price_usd_annual": null,
+        "interactions_monthly": 500,
+        "interactions_note": "500 fast requests/mo + unlimited slow",
+        "requests_per_window": null,
+        "window_hours": null,
+        "tokens_monthly": null,
+        "credits_monthly": null,
+        "completions_included": true,
+        "model_ids": [
+          "claude-sonnet-4.6-non-reasoning-low-effort",
+          "claude-opus-4.6-non-reasoning-high-effort",
+          "gpt-4o-chatgpt",
+          "gemini-2.5-pro"
+        ],
+        "models_included": [
+          "Claude Sonnet",
+          "Claude Opus",
+          "GPT-4o",
+          "Gemini 2.5 Pro"
+        ],
+        "modalities": [
+          "text",
+          "code",
+          "image_input"
+        ],
+        "third_party_clients": {
+          "supported": false,
+          "openclaw": false,
+          "cline": false,
+          "kilo": false,
+          "roo": false,
+          "pi": false,
+          "notes": "Cursor is a standalone IDE. Model access is bundled — not exposed via API or third-party clients."
+        },
+        "restrictions": [
+          "500 fast requests/mo then slow",
+          "Cursor IDE only"
+        ],
+        "policy_notes": "",
+        "intro_pricing": false,
+        "intro_notes": "",
+        "best_coding_index": 47.6,
+        "coding_value": 1190
+      },
+      {
+        "name": "Business",
+        "category": "coding_platform",
+        "price_usd_monthly": 40,
+        "price_usd_annual": null,
+        "interactions_monthly": 500,
+        "interactions_note": "500 fast requests/mo + unlimited slow, per user",
+        "requests_per_window": null,
+        "window_hours": null,
+        "tokens_monthly": null,
+        "credits_monthly": null,
+        "completions_included": true,
+        "model_ids": [
+          "claude-sonnet-4.6-non-reasoning-low-effort",
+          "claude-opus-4.6-non-reasoning-high-effort",
+          "gpt-4o-chatgpt",
+          "gemini-2.5-pro"
+        ],
+        "models_included": [
+          "Claude Sonnet",
+          "Claude Opus",
+          "GPT-4o",
+          "Gemini 2.5 Pro"
+        ],
+        "modalities": [
+          "text",
+          "code",
+          "image_input"
+        ],
+        "third_party_clients": {
+          "supported": false,
+          "openclaw": false,
+          "cline": false,
+          "kilo": false,
+          "roo": false,
+          "pi": false,
+          "notes": "Cursor is a standalone IDE. Model access is bundled — not exposed via API or third-party clients."
+        },
+        "restrictions": [
+          "Per-user pricing",
+          "Team management",
+          "Cursor IDE only"
+        ],
+        "policy_notes": "",
+        "intro_pricing": false,
+        "intro_notes": "",
+        "best_coding_index": 47.6,
+        "coding_value": 595
+      }
+    ]
+  },
+  "google": {
+    "provider": "Google",
+    "updated": "2026-04-06",
+    "source_urls": [
+      "https://one.google.com/about/ai-premium",
+      "https://aistudio.google.com/"
+    ],
+    "plans": [
+      {
+        "name": "AI Studio Free",
+        "category": "model_provider",
+        "price_usd_monthly": 0,
+        "price_usd_annual": null,
+        "interactions_monthly": null,
+        "interactions_note": "Rate-limited free tier via AI Studio",
+        "requests_per_window": null,
+        "window_hours": null,
+        "tokens_monthly": null,
+        "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "gemini-2.5-flash-non-reasoning",
+          "gemini-2.5-pro"
+        ],
+        "models_included": [
+          "Gemini 2.5 Flash",
+          "Gemini 2.5 Pro (rate limited)"
+        ],
+        "modalities": [
+          "text",
+          "code",
+          "image_input",
+          "audio",
+          "video"
+        ],
+        "third_party_clients": {
+          "supported": true,
+          "openclaw": true,
+          "cline": true,
+          "kilo": true,
+          "roo": true,
+          "pi": true,
+          "notes": "Via Gemini API key (Google AI Studio). All major clients supported."
+        },
+        "restrictions": [
+          "Rate limited",
+          "AI Studio / API only"
+        ],
+        "policy_notes": "",
+        "intro_pricing": false,
+        "intro_notes": "",
+        "best_coding_index": 31.9,
+        "coding_value": null
+      },
+      {
+        "name": "AI Premium",
+        "category": "model_provider",
+        "price_usd_monthly": 20,
+        "price_usd_annual": null,
+        "interactions_monthly": null,
+        "interactions_note": "Soft limit, no hard cap published",
+        "requests_per_window": null,
+        "window_hours": null,
+        "tokens_monthly": null,
+        "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "gemini-2.5-pro",
+          "gemini-2.5-flash-non-reasoning"
+        ],
+        "models_included": [
+          "Gemini 2.5 Pro",
+          "Gemini 2.5 Flash"
+        ],
+        "modalities": [
+          "text",
+          "code",
+          "image_input",
+          "audio",
+          "video",
+          "file_upload"
+        ],
+        "third_party_clients": {
+          "supported": true,
+          "openclaw": true,
+          "cline": true,
+          "kilo": true,
+          "roo": true,
+          "pi": true,
+          "notes": "Via Gemini API key (Google AI Studio). All major clients supported."
+        },
+        "restrictions": [
+          "Google One subscription (includes 2TB storage + other perks)"
+        ],
+        "policy_notes": "Google One AI Premium includes Gemini Advanced in Gmail, Docs, etc. API access via AI Studio separately.",
+        "intro_pricing": false,
+        "intro_notes": "",
+        "best_coding_index": 31.9,
+        "coding_value": null
       }
     ]
   },
@@ -153,12 +644,19 @@ window.CODEPLANS_DATA = {
     "plans": [
       {
         "name": "Starter",
+        "category": "model_provider",
         "price_usd_monthly": 9,
         "price_usd_annual": 9,
+        "interactions_monthly": 2500,
+        "interactions_note": "10M tokens/mo ÷ 4k per interaction",
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": 10000000,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "kimi-k2"
+        ],
         "models_included": [
           "Kimi K2"
         ],
@@ -173,6 +671,7 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
+          "pi": true,
           "notes": "Via Moonshot API and OpenRouter."
         },
         "restrictions": [
@@ -180,16 +679,25 @@ window.CODEPLANS_DATA = {
         ],
         "policy_notes": "",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 22.1,
+        "coding_value": 6139
       },
       {
         "name": "Ultra",
+        "category": "model_provider",
         "price_usd_monthly": 49,
         "price_usd_annual": 399,
+        "interactions_monthly": 17500,
+        "interactions_note": "70M tokens/mo ÷ 4k per interaction",
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": 70000000,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "kimi-k2"
+        ],
         "models_included": [
           "Kimi K2"
         ],
@@ -204,6 +712,7 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
+          "pi": true,
           "notes": "Via Moonshot API and OpenRouter."
         },
         "restrictions": [
@@ -211,7 +720,9 @@ window.CODEPLANS_DATA = {
         ],
         "policy_notes": "",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 22.1,
+        "coding_value": 7893
       }
     ]
   },
@@ -224,12 +735,19 @@ window.CODEPLANS_DATA = {
     "plans": [
       {
         "name": "Lite",
+        "category": "model_provider",
         "price_usd_monthly": 6,
         "price_usd_annual": null,
+        "interactions_monthly": 15000,
+        "interactions_note": "60M credits/mo ÷ 4k per interaction",
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
         "credits_monthly": 60,
+        "completions_included": false,
+        "model_ids": [
+          "mimo-v2-pro"
+        ],
         "models_included": [
           "MiMo-V2-Pro",
           "MiMo-V2-Omni",
@@ -248,21 +766,31 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": false,
+          "pi": false,
           "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code, KiloCode."
         },
         "restrictions": [],
         "policy_notes": "",
         "intro_pricing": true,
-        "intro_notes": "First-purchase discount (~12% off)"
+        "intro_notes": "First-purchase discount (~12% off)",
+        "best_coding_index": 41.4,
+        "coding_value": 103500
       },
       {
         "name": "Standard",
+        "category": "model_provider",
         "price_usd_monthly": 16,
         "price_usd_annual": null,
+        "interactions_monthly": 50000,
+        "interactions_note": "200M credits/mo ÷ 4k per interaction",
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
         "credits_monthly": 200,
+        "completions_included": false,
+        "model_ids": [
+          "mimo-v2-pro"
+        ],
         "models_included": [
           "MiMo-V2-Pro",
           "MiMo-V2-Omni",
@@ -281,21 +809,31 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": false,
+          "pi": false,
           "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code, KiloCode."
         },
         "restrictions": [],
         "policy_notes": "",
         "intro_pricing": true,
-        "intro_notes": "First-purchase discount (~12% off)"
+        "intro_notes": "First-purchase discount (~12% off)",
+        "best_coding_index": 41.4,
+        "coding_value": 129375
       },
       {
         "name": "Pro",
+        "category": "model_provider",
         "price_usd_monthly": 50,
         "price_usd_annual": null,
+        "interactions_monthly": 175000,
+        "interactions_note": "700M credits/mo ÷ 4k per interaction",
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
         "credits_monthly": 700,
+        "completions_included": false,
+        "model_ids": [
+          "mimo-v2-pro"
+        ],
         "models_included": [
           "MiMo-V2-Pro",
           "MiMo-V2-Omni",
@@ -314,21 +852,31 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": false,
+          "pi": false,
           "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code, KiloCode."
         },
         "restrictions": [],
         "policy_notes": "",
         "intro_pricing": true,
-        "intro_notes": "First-purchase discount (~12% off)"
+        "intro_notes": "First-purchase discount (~12% off)",
+        "best_coding_index": 41.4,
+        "coding_value": 144900
       },
       {
         "name": "Max",
+        "category": "model_provider",
         "price_usd_monthly": 100,
         "price_usd_annual": null,
+        "interactions_monthly": 400000,
+        "interactions_note": "1600M credits/mo ÷ 4k per interaction",
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
         "credits_monthly": 1600,
+        "completions_included": false,
+        "model_ids": [
+          "mimo-v2-pro"
+        ],
         "models_included": [
           "MiMo-V2-Pro",
           "MiMo-V2-Omni",
@@ -347,12 +895,15 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": false,
+          "pi": false,
           "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code, KiloCode."
         },
         "restrictions": [],
         "policy_notes": "",
         "intro_pricing": true,
-        "intro_notes": "First-purchase discount (~12% off)"
+        "intro_notes": "First-purchase discount (~12% off)",
+        "best_coding_index": 41.4,
+        "coding_value": 165600
       }
     ]
   },
@@ -365,12 +916,19 @@ window.CODEPLANS_DATA = {
     "plans": [
       {
         "name": "Starter",
+        "category": "model_provider",
         "price_usd_monthly": 10,
         "price_usd_annual": null,
+        "interactions_monthly": 216000,
+        "interactions_note": "1500 requests per 5h window",
         "requests_per_window": 1500,
         "window_hours": 5,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "minimax-m2.7"
+        ],
         "models_included": [
           "MiniMax M2.7"
         ],
@@ -384,21 +942,31 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
+          "pi": true,
           "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
         },
         "restrictions": [],
         "policy_notes": "",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 41.9,
+        "coding_value": 905040
       },
       {
         "name": "Plus",
+        "category": "model_provider",
         "price_usd_monthly": 20,
         "price_usd_annual": null,
+        "interactions_monthly": 648000,
+        "interactions_note": "4500 requests per 5h window",
         "requests_per_window": 4500,
         "window_hours": 5,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "minimax-m2.7"
+        ],
         "models_included": [
           "MiniMax M2.7"
         ],
@@ -414,6 +982,7 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
+          "pi": true,
           "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
         },
         "restrictions": [
@@ -422,16 +991,25 @@ window.CODEPLANS_DATA = {
         ],
         "policy_notes": "",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 41.9,
+        "coding_value": 1357560
       },
       {
         "name": "Max",
+        "category": "model_provider",
         "price_usd_monthly": 50,
         "price_usd_annual": null,
+        "interactions_monthly": 2160000,
+        "interactions_note": "15000 requests per 5h window",
         "requests_per_window": 15000,
         "window_hours": 5,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "minimax-m2.7"
+        ],
         "models_included": [
           "MiniMax M2.7"
         ],
@@ -449,6 +1027,7 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
+          "pi": true,
           "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
         },
         "restrictions": [
@@ -459,16 +1038,25 @@ window.CODEPLANS_DATA = {
         ],
         "policy_notes": "",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 41.9,
+        "coding_value": 1810080
       },
       {
         "name": "Plus Highspeed",
+        "category": "model_provider",
         "price_usd_monthly": 40,
         "price_usd_annual": null,
+        "interactions_monthly": 648000,
+        "interactions_note": "4500 requests per 5h window",
         "requests_per_window": 4500,
         "window_hours": 5,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "minimax-m2.7"
+        ],
         "models_included": [
           "MiniMax M2.7-Highspeed"
         ],
@@ -484,6 +1072,7 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
+          "pi": true,
           "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
         },
         "restrictions": [
@@ -492,16 +1081,25 @@ window.CODEPLANS_DATA = {
         ],
         "policy_notes": "",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 41.9,
+        "coding_value": 678780
       },
       {
         "name": "Max Highspeed",
+        "category": "model_provider",
         "price_usd_monthly": 80,
         "price_usd_annual": null,
+        "interactions_monthly": 2160000,
+        "interactions_note": "15000 requests per 5h window",
         "requests_per_window": 15000,
         "window_hours": 5,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "minimax-m2.7"
+        ],
         "models_included": [
           "MiniMax M2.7-Highspeed"
         ],
@@ -519,6 +1117,7 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
+          "pi": true,
           "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
         },
         "restrictions": [
@@ -529,16 +1128,25 @@ window.CODEPLANS_DATA = {
         ],
         "policy_notes": "",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 41.9,
+        "coding_value": 1131300
       },
       {
         "name": "Ultra Highspeed",
+        "category": "model_provider",
         "price_usd_monthly": 150,
         "price_usd_annual": null,
+        "interactions_monthly": 4320000,
+        "interactions_note": "30000 requests per 5h window",
         "requests_per_window": 30000,
         "window_hours": 5,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "minimax-m2.7"
+        ],
         "models_included": [
           "MiniMax M2.7-Highspeed"
         ],
@@ -556,6 +1164,7 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
+          "pi": true,
           "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
         },
         "restrictions": [
@@ -566,7 +1175,9 @@ window.CODEPLANS_DATA = {
         ],
         "policy_notes": "",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 41.9,
+        "coding_value": 1206720
       }
     ]
   },
@@ -579,12 +1190,19 @@ window.CODEPLANS_DATA = {
     "plans": [
       {
         "name": "Free",
+        "category": "model_provider",
         "price_usd_monthly": 0,
         "price_usd_annual": null,
+        "interactions_monthly": null,
+        "interactions_note": "Limited, unspecified",
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "gpt-4o-mini"
+        ],
         "models_included": [
           "gpt-4o-mini"
         ],
@@ -598,6 +1216,7 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
+          "pi": true,
           "notes": "Via OpenAI API key. All major clients supported."
         },
         "restrictions": [
@@ -605,16 +1224,25 @@ window.CODEPLANS_DATA = {
         ],
         "policy_notes": "",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 12.6,
+        "coding_value": null
       },
       {
         "name": "Go",
+        "category": "model_provider",
         "price_usd_monthly": 8,
         "price_usd_annual": null,
+        "interactions_monthly": null,
+        "interactions_note": "Soft limit",
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "gpt-4o-chatgpt"
+        ],
         "models_included": [
           "gpt-4o"
         ],
@@ -629,24 +1257,35 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
+          "pi": true,
           "notes": "Via OpenAI API key. All major clients supported."
         },
         "restrictions": [],
         "policy_notes": "",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 14.1,
+        "coding_value": null
       },
       {
         "name": "Plus",
+        "category": "model_provider",
         "price_usd_monthly": 20,
         "price_usd_annual": null,
+        "interactions_monthly": null,
+        "interactions_note": "Soft limit",
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "gpt-4o-chatgpt",
+          "gpt-5-chatgpt"
+        ],
         "models_included": [
           "gpt-4o",
-          "o3"
+          "gpt-5"
         ],
         "modalities": [
           "text",
@@ -662,25 +1301,37 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
+          "pi": true,
           "notes": "Via OpenAI API key. All major clients supported."
         },
         "restrictions": [],
         "policy_notes": "",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 21.2,
+        "coding_value": null
       },
       {
         "name": "Pro",
+        "category": "model_provider",
         "price_usd_monthly": 200,
         "price_usd_annual": null,
+        "interactions_monthly": null,
+        "interactions_note": "Unlimited access to all models",
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "gpt-4o-chatgpt",
+          "gpt-5-chatgpt",
+          "gpt-5-codex-high"
+        ],
         "models_included": [
           "gpt-4o",
-          "o3",
-          "o3-pro"
+          "gpt-5",
+          "gpt-5-codex"
         ],
         "modalities": [
           "text",
@@ -696,12 +1347,259 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
+          "pi": true,
           "notes": "Via OpenAI API key. All major clients supported."
         },
         "restrictions": [],
         "policy_notes": "Unlimited access to all models.",
         "intro_pricing": false,
-        "intro_notes": ""
+        "intro_notes": "",
+        "best_coding_index": 38.9,
+        "coding_value": null
+      }
+    ]
+  },
+  "opencode": {
+    "provider": "OpenCode",
+    "updated": "2026-04-06",
+    "source_urls": [
+      "https://opencode.ai/pricing"
+    ],
+    "plans": [
+      {
+        "name": "Free",
+        "category": "coding_platform",
+        "price_usd_monthly": 0,
+        "price_usd_annual": null,
+        "interactions_monthly": 50,
+        "interactions_note": "Limited free tier",
+        "requests_per_window": null,
+        "window_hours": null,
+        "tokens_monthly": null,
+        "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "claude-sonnet-4.6-non-reasoning-low-effort",
+          "gpt-4o-chatgpt"
+        ],
+        "models_included": [
+          "Claude Sonnet",
+          "GPT-4o (limited)"
+        ],
+        "modalities": [
+          "text",
+          "code"
+        ],
+        "third_party_clients": {
+          "supported": true,
+          "openclaw": false,
+          "cline": false,
+          "kilo": false,
+          "roo": false,
+          "pi": true,
+          "notes": "OpenCode is itself a terminal-based coding agent. Works with pi and other agent harnesses via its OpenAI-compatible endpoint."
+        },
+        "restrictions": [
+          "Limited requests"
+        ],
+        "policy_notes": "",
+        "intro_pricing": false,
+        "intro_notes": "",
+        "best_coding_index": 43,
+        "coding_value": null
+      },
+      {
+        "name": "Zen",
+        "category": "coding_platform",
+        "price_usd_monthly": 20,
+        "price_usd_annual": null,
+        "interactions_monthly": 500,
+        "interactions_note": "Unlimited agentic coding tasks (soft cap)",
+        "requests_per_window": null,
+        "window_hours": null,
+        "tokens_monthly": null,
+        "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "claude-sonnet-4.6-non-reasoning-low-effort",
+          "claude-opus-4.6-non-reasoning-high-effort",
+          "gpt-4o-chatgpt",
+          "gemini-2.5-pro"
+        ],
+        "models_included": [
+          "Claude Sonnet",
+          "Claude Opus",
+          "GPT-4o",
+          "Gemini 2.5 Pro"
+        ],
+        "modalities": [
+          "text",
+          "code",
+          "image_input"
+        ],
+        "third_party_clients": {
+          "supported": true,
+          "openclaw": false,
+          "cline": false,
+          "kilo": false,
+          "roo": false,
+          "pi": true,
+          "notes": "OpenCode is itself a terminal-based coding agent. Works with pi and other agent harnesses via its OpenAI-compatible endpoint."
+        },
+        "restrictions": [],
+        "policy_notes": "",
+        "intro_pricing": false,
+        "intro_notes": "",
+        "best_coding_index": 47.6,
+        "coding_value": 1190
+      }
+    ]
+  },
+  "windsurf": {
+    "provider": "Windsurf",
+    "updated": "2026-04-06",
+    "source_urls": [
+      "https://windsurf.com/pricing"
+    ],
+    "plans": [
+      {
+        "name": "Free",
+        "category": "coding_platform",
+        "price_usd_monthly": 0,
+        "price_usd_annual": null,
+        "interactions_monthly": 25,
+        "interactions_note": "~25 free flow action credits/mo",
+        "requests_per_window": null,
+        "window_hours": null,
+        "tokens_monthly": null,
+        "credits_monthly": null,
+        "completions_included": true,
+        "model_ids": [
+          "claude-sonnet-4.6-non-reasoning-low-effort",
+          "gpt-4o-chatgpt"
+        ],
+        "models_included": [
+          "Claude Sonnet",
+          "GPT-4o (limited)"
+        ],
+        "modalities": [
+          "text",
+          "code",
+          "image_input"
+        ],
+        "third_party_clients": {
+          "supported": false,
+          "openclaw": false,
+          "cline": false,
+          "kilo": false,
+          "roo": false,
+          "pi": false,
+          "notes": "Windsurf is a standalone IDE. Model access is bundled — not exposed via third-party clients."
+        },
+        "restrictions": [
+          "Limited credits",
+          "Windsurf IDE only"
+        ],
+        "policy_notes": "",
+        "intro_pricing": false,
+        "intro_notes": "",
+        "best_coding_index": 43,
+        "coding_value": null
+      },
+      {
+        "name": "Pro",
+        "category": "coding_platform",
+        "price_usd_monthly": 20,
+        "price_usd_annual": null,
+        "interactions_monthly": 500,
+        "interactions_note": "500 flow action credits/mo",
+        "requests_per_window": null,
+        "window_hours": null,
+        "tokens_monthly": null,
+        "credits_monthly": null,
+        "completions_included": true,
+        "model_ids": [
+          "claude-sonnet-4.6-non-reasoning-low-effort",
+          "claude-opus-4.6-non-reasoning-high-effort",
+          "gpt-4o-chatgpt",
+          "gemini-2.5-pro"
+        ],
+        "models_included": [
+          "Claude Sonnet",
+          "Claude Opus",
+          "GPT-4o",
+          "Gemini 2.5 Pro"
+        ],
+        "modalities": [
+          "text",
+          "code",
+          "image_input"
+        ],
+        "third_party_clients": {
+          "supported": false,
+          "openclaw": false,
+          "cline": false,
+          "kilo": false,
+          "roo": false,
+          "pi": false,
+          "notes": "Windsurf is a standalone IDE. Model access is bundled — not exposed via third-party clients."
+        },
+        "restrictions": [
+          "Windsurf IDE only"
+        ],
+        "policy_notes": "",
+        "intro_pricing": false,
+        "intro_notes": "",
+        "best_coding_index": 47.6,
+        "coding_value": 1190
+      },
+      {
+        "name": "Teams",
+        "category": "coding_platform",
+        "price_usd_monthly": 40,
+        "price_usd_annual": null,
+        "interactions_monthly": 1000,
+        "interactions_note": "1000 flow action credits/mo per user",
+        "requests_per_window": null,
+        "window_hours": null,
+        "tokens_monthly": null,
+        "credits_monthly": null,
+        "completions_included": true,
+        "model_ids": [
+          "claude-sonnet-4.6-non-reasoning-low-effort",
+          "claude-opus-4.6-non-reasoning-high-effort",
+          "gpt-4o-chatgpt",
+          "gemini-2.5-pro"
+        ],
+        "models_included": [
+          "Claude Sonnet",
+          "Claude Opus",
+          "GPT-4o",
+          "Gemini 2.5 Pro"
+        ],
+        "modalities": [
+          "text",
+          "code",
+          "image_input"
+        ],
+        "third_party_clients": {
+          "supported": false,
+          "openclaw": false,
+          "cline": false,
+          "kilo": false,
+          "roo": false,
+          "pi": false,
+          "notes": "Windsurf is a standalone IDE. Model access is bundled — not exposed via third-party clients."
+        },
+        "restrictions": [
+          "Per-user pricing",
+          "Windsurf IDE only"
+        ],
+        "policy_notes": "",
+        "intro_pricing": false,
+        "intro_notes": "",
+        "best_coding_index": 47.6,
+        "coding_value": 1190
       }
     ]
   },
@@ -715,12 +1613,19 @@ window.CODEPLANS_DATA = {
     "plans": [
       {
         "name": "Lite",
+        "category": "model_provider",
         "price_usd_monthly": 90,
         "price_usd_annual": null,
+        "interactions_monthly": 17280,
+        "interactions_note": "120 requests per 5h window",
         "requests_per_window": 120,
         "window_hours": 5,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "glm-5-non-reasoning"
+        ],
         "models_included": [
           "GLM-5",
           "GLM-4.7-Flash",
@@ -736,21 +1641,32 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
+          "pi": true,
           "notes": "OpenAI-compatible API. Works with all major coding clients."
         },
         "restrictions": [],
         "policy_notes": "",
         "intro_pricing": true,
-        "intro_notes": "$10/mo first cycle, then $90/mo"
+        "intro_notes": "$10/mo first cycle, then $90/mo",
+        "best_coding_index": 39,
+        "coding_value": 7488
       },
       {
         "name": "Pro",
+        "category": "model_provider",
         "price_usd_monthly": 90,
         "price_usd_annual": null,
+        "interactions_monthly": 86400,
+        "interactions_note": "600 requests per 5h window",
         "requests_per_window": 600,
         "window_hours": 5,
         "tokens_monthly": null,
         "credits_monthly": null,
+        "completions_included": false,
+        "model_ids": [
+          "glm-5-non-reasoning",
+          "glm-5-reasoning"
+        ],
         "models_included": [
           "GLM-5",
           "GLM-5.1",
@@ -767,12 +1683,15 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
+          "pi": true,
           "notes": "OpenAI-compatible API. Works with all major coding clients."
         },
         "restrictions": [],
         "policy_notes": "",
         "intro_pricing": true,
-        "intro_notes": "$10/mo first cycle, then $90/mo"
+        "intro_notes": "$10/mo first cycle, then $90/mo",
+        "best_coding_index": 44.2,
+        "coding_value": 42432
       }
     ]
   }

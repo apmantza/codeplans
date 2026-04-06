@@ -1,0 +1,92 @@
+{
+  "provider": "OpenCode",
+  "updated": "2026-04-06",
+  "source_urls": [
+    "https://opencode.ai/pricing"
+  ],
+  "plans": [
+    {
+      "name": "Free",
+      "category": "coding_platform",
+      "price_usd_monthly": 0,
+      "price_usd_annual": null,
+      "interactions_monthly": 50,
+      "interactions_note": "Limited free tier",
+      "requests_per_window": null,
+      "window_hours": null,
+      "tokens_monthly": null,
+      "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "claude-sonnet-4.6-non-reasoning-low-effort",
+        "gpt-4o-chatgpt"
+      ],
+      "models_included": [
+        "Claude Sonnet",
+        "GPT-4o (limited)"
+      ],
+      "modalities": [
+        "text",
+        "code"
+      ],
+      "third_party_clients": {
+        "supported": true,
+        "openclaw": false,
+        "cline": false,
+        "kilo": false,
+        "roo": false,
+        "pi": true,
+        "notes": "OpenCode is itself a terminal-based coding agent. Works with pi and other agent harnesses via its OpenAI-compatible endpoint."
+      },
+      "restrictions": [
+        "Limited requests"
+      ],
+      "policy_notes": "",
+      "intro_pricing": false,
+      "intro_notes": ""
+    },
+    {
+      "name": "Zen",
+      "category": "coding_platform",
+      "price_usd_monthly": 20,
+      "price_usd_annual": null,
+      "interactions_monthly": 500,
+      "interactions_note": "Unlimited agentic coding tasks (soft cap)",
+      "requests_per_window": null,
+      "window_hours": null,
+      "tokens_monthly": null,
+      "credits_monthly": null,
+      "completions_included": false,
+      "model_ids": [
+        "claude-sonnet-4.6-non-reasoning-low-effort",
+        "claude-opus-4.6-non-reasoning-high-effort",
+        "gpt-4o-chatgpt",
+        "gemini-2.5-pro"
+      ],
+      "models_included": [
+        "Claude Sonnet",
+        "Claude Opus",
+        "GPT-4o",
+        "Gemini 2.5 Pro"
+      ],
+      "modalities": [
+        "text",
+        "code",
+        "image_input"
+      ],
+      "third_party_clients": {
+        "supported": true,
+        "openclaw": false,
+        "cline": false,
+        "kilo": false,
+        "roo": false,
+        "pi": true,
+        "notes": "OpenCode is itself a terminal-based coding agent. Works with pi and other agent harnesses via its OpenAI-compatible endpoint."
+      },
+      "restrictions": [],
+      "policy_notes": "",
+      "intro_pricing": false,
+      "intro_notes": ""
+    }
+  ]
+}
