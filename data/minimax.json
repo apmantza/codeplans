@@ -1,7 +1,9 @@
 {
   "provider": "MiniMax",
   "updated": "2026-04-06",
-  "source_urls": ["https://platform.minimax.io/docs/guides/pricing-token-plan"],
+  "source_urls": [
+    "https://platform.minimax.io/docs/guides/pricing-token-plan"
+  ],
   "plans": [
     {
       "name": "Starter",
@@ -11,8 +13,13 @@
       "window_hours": 5,
       "tokens_monthly": null,
       "credits_monthly": null,
-      "models_included": ["MiniMax M2.7"],
-      "modalities": ["text", "code"],
+      "models_included": [
+        "MiniMax M2.7"
+      ],
+      "modalities": [
+        "text",
+        "code"
+      ],
       "third_party_clients": {
         "supported": true,
         "openclaw": true,
@@ -34,8 +41,15 @@
       "window_hours": 5,
       "tokens_monthly": null,
       "credits_monthly": null,
-      "models_included": ["MiniMax M2.7"],
-      "modalities": ["text", "code", "audio", "image_gen"],
+      "models_included": [
+        "MiniMax M2.7"
+      ],
+      "modalities": [
+        "text",
+        "code",
+        "audio",
+        "image_gen"
+      ],
       "third_party_clients": {
         "supported": true,
         "openclaw": true,
@@ -44,7 +58,10 @@
         "roo": true,
         "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
       },
-      "restrictions": ["4000 speech chars/day", "50 images/day"],
+      "restrictions": [
+        "4000 speech chars/day",
+        "50 images/day"
+      ],
       "policy_notes": "",
       "intro_pricing": false,
       "intro_notes": ""
@@ -57,8 +74,17 @@
       "window_hours": 5,
       "tokens_monthly": null,
       "credits_monthly": null,
-      "models_included": ["MiniMax M2.7"],
-      "modalities": ["text", "code", "audio", "image_gen", "video", "music"],
+      "models_included": [
+        "MiniMax M2.7"
+      ],
+      "modalities": [
+        "text",
+        "code",
+        "audio",
+        "image_gen",
+        "video",
+        "music"
+      ],
       "third_party_clients": {
         "supported": true,
         "openclaw": true,
@@ -67,7 +93,12 @@
         "roo": true,
         "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
       },
-      "restrictions": ["11000 speech chars/day", "120 images/day", "2 videos/day", "4 songs/day"],
+      "restrictions": [
+        "11000 speech chars/day",
+        "120 images/day",
+        "2 videos/day",
+        "4 songs/day"
+      ],
       "policy_notes": "",
       "intro_pricing": false,
       "intro_notes": ""
@@ -80,8 +111,15 @@
       "window_hours": 5,
       "tokens_monthly": null,
       "credits_monthly": null,
-      "models_included": ["MiniMax M2.7-Highspeed"],
-      "modalities": ["text", "code", "audio", "image_gen"],
+      "models_included": [
+        "MiniMax M2.7-Highspeed"
+      ],
+      "modalities": [
+        "text",
+        "code",
+        "audio",
+        "image_gen"
+      ],
       "third_party_clients": {
         "supported": true,
         "openclaw": true,
@@ -90,7 +128,10 @@
         "roo": true,
         "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
       },
-      "restrictions": ["9000 speech chars/day", "100 images/day"],
+      "restrictions": [
+        "9000 speech chars/day",
+        "100 images/day"
+      ],
       "policy_notes": "",
       "intro_pricing": false,
       "intro_notes": ""
@@ -103,8 +144,17 @@
       "window_hours": 5,
       "tokens_monthly": null,
       "credits_monthly": null,
-      "models_included": ["MiniMax M2.7-Highspeed"],
-      "modalities": ["text", "code", "audio", "image_gen", "video", "music"],
+      "models_included": [
+        "MiniMax M2.7-Highspeed"
+      ],
+      "modalities": [
+        "text",
+        "code",
+        "audio",
+        "image_gen",
+        "video",
+        "music"
+      ],
       "third_party_clients": {
         "supported": true,
         "openclaw": true,
@@ -113,7 +163,12 @@
         "roo": true,
         "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
       },
-      "restrictions": ["19000 speech chars/day", "200 images/day", "3 videos/day", "7 songs/day"],
+      "restrictions": [
+        "19000 speech chars/day",
+        "200 images/day",
+        "3 videos/day",
+        "7 songs/day"
+      ],
       "policy_notes": "",
       "intro_pricing": false,
       "intro_notes": ""
@@ -126,8 +181,17 @@
       "window_hours": 5,
       "tokens_monthly": null,
       "credits_monthly": null,
-      "models_included": ["MiniMax M2.7-Highspeed"],
-      "modalities": ["text", "code", "audio", "image_gen", "video", "music"],
+      "models_included": [
+        "MiniMax M2.7-Highspeed"
+      ],
+      "modalities": [
+        "text",
+        "code",
+        "audio",
+        "image_gen",
+        "video",
+        "music"
+      ],
       "third_party_clients": {
         "supported": true,
         "openclaw": true,
@@ -136,7 +200,12 @@
         "roo": true,
         "notes": "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed."
       },
-      "restrictions": ["50000 speech chars/day", "800 images/day", "5 videos/day", "15 songs/day"],
+      "restrictions": [
+        "50000 speech chars/day",
+        "800 images/day",
+        "5 videos/day",
+        "15 songs/day"
+      ],
       "policy_notes": "",
       "intro_pricing": false,
       "intro_notes": ""

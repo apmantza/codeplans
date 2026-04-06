@@ -10,7 +10,7 @@ window.CODEPLANS_DATA = {
     "plans": [
       {
         "name": "Pro",
-        "price_usd_monthly": 20,
+        "price_usd_monthly": 17,
         "price_usd_annual": null,
         "requests_per_window": null,
         "window_hours": null,
@@ -31,10 +31,9 @@ window.CODEPLANS_DATA = {
           "cline": false,
           "kilo": false,
           "roo": false,
-          "notes": "Blocked as of April 4 2026. API required separately."
+          "notes": "Blocked as of April 4 2026. Subscription OAuth tokens no longer work in third-party clients. API access required separately."
         },
         "restrictions": [
-          "No third-party client access",
           "Claude.ai interface only"
         ],
         "policy_notes": "Anthropic blocked subscription OAuth tokens in third-party clients (OpenClaw, Cline, Kilo, Roo etc.) on April 4 2026, citing unsustainable compute costs.",
@@ -65,13 +64,13 @@ window.CODEPLANS_DATA = {
           "cline": false,
           "kilo": false,
           "roo": false,
-          "notes": "Blocked as of April 4 2026. API required separately."
+          "notes": "Blocked as of April 4 2026. Subscription OAuth tokens no longer work in third-party clients. API access required separately."
         },
         "restrictions": [
-          "No third-party client access",
-          "Claude.ai interface only"
+          "Claude.ai interface only",
+          "5x usage vs Pro"
         ],
-        "policy_notes": "Same restriction as Pro. 5x usage limits vs Pro.",
+        "policy_notes": "Anthropic blocked subscription OAuth tokens in third-party clients (OpenClaw, Cline, Kilo, Roo etc.) on April 4 2026, citing unsustainable compute costs.",
         "intro_pricing": false,
         "intro_notes": ""
       },
@@ -99,13 +98,13 @@ window.CODEPLANS_DATA = {
           "cline": false,
           "kilo": false,
           "roo": false,
-          "notes": "Blocked as of April 4 2026. API required separately."
+          "notes": "Blocked as of April 4 2026. Subscription OAuth tokens no longer work in third-party clients. API access required separately."
         },
         "restrictions": [
-          "No third-party client access",
-          "Claude.ai interface only"
+          "Claude.ai interface only",
+          "20x usage vs Pro"
         ],
-        "policy_notes": "Same restriction as Pro. 20x usage limits vs Pro.",
+        "policy_notes": "Anthropic blocked subscription OAuth tokens in third-party clients (OpenClaw, Cline, Kilo, Roo etc.) on April 4 2026, citing unsustainable compute costs.",
         "intro_pricing": false,
         "intro_notes": ""
       },
@@ -133,13 +132,13 @@ window.CODEPLANS_DATA = {
           "cline": false,
           "kilo": false,
           "roo": false,
-          "notes": "Blocked as of April 4 2026. API required separately."
+          "notes": "Blocked as of April 4 2026. Subscription OAuth tokens no longer work in third-party clients. API access required separately."
         },
         "restrictions": [
-          "No third-party client access",
-          "Per user pricing"
+          "Claude.ai interface only",
+          "Per-user pricing"
         ],
-        "policy_notes": "Per-user pricing. Same third-party restriction applies.",
+        "policy_notes": "Anthropic blocked subscription OAuth tokens in third-party clients (OpenClaw, Cline, Kilo, Roo etc.) on April 4 2026, citing unsustainable compute costs.",
         "intro_pricing": false,
         "intro_notes": ""
       }
@@ -149,14 +148,13 @@ window.CODEPLANS_DATA = {
     "provider": "Kimi (Moonshot)",
     "updated": "2026-04-06",
     "source_urls": [
-      "https://kimi-k2.com/pricing",
-      "https://platform.moonshot.ai/docs/pricing/chat"
+      "https://kimi-k2.com/pricing"
     ],
     "plans": [
       {
         "name": "Starter",
         "price_usd_monthly": 9,
-        "price_usd_annual": 80,
+        "price_usd_annual": 9,
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": 10000000,
@@ -221,18 +219,17 @@ window.CODEPLANS_DATA = {
     "provider": "Xiaomi MiMo",
     "updated": "2026-04-06",
     "source_urls": [
-      "https://mimo.mi.com/",
-      "https://platform.xiaomimimo.com/"
+      "https://mimo.mi.com/"
     ],
     "plans": [
       {
         "name": "Lite",
-        "price_usd_monthly": null,
+        "price_usd_monthly": 6,
         "price_usd_annual": null,
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
-        "credits_monthly": null,
+        "credits_monthly": 60,
         "models_included": [
           "MiMo-V2-Pro",
           "MiMo-V2-Omni",
@@ -251,21 +248,21 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": false,
-          "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code."
+          "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code, KiloCode."
         },
         "restrictions": [],
         "policy_notes": "",
         "intro_pricing": true,
-        "intro_notes": "88% first-purchase discount"
+        "intro_notes": "First-purchase discount (~12% off)"
       },
       {
         "name": "Standard",
-        "price_usd_monthly": null,
+        "price_usd_monthly": 16,
         "price_usd_annual": null,
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
-        "credits_monthly": null,
+        "credits_monthly": 200,
         "models_included": [
           "MiMo-V2-Pro",
           "MiMo-V2-Omni",
@@ -284,21 +281,21 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": false,
-          "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code."
+          "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code, KiloCode."
         },
         "restrictions": [],
         "policy_notes": "",
         "intro_pricing": true,
-        "intro_notes": "88% first-purchase discount"
+        "intro_notes": "First-purchase discount (~12% off)"
       },
       {
         "name": "Pro",
-        "price_usd_monthly": null,
+        "price_usd_monthly": 50,
         "price_usd_annual": null,
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
-        "credits_monthly": null,
+        "credits_monthly": 700,
         "models_included": [
           "MiMo-V2-Pro",
           "MiMo-V2-Omni",
@@ -317,21 +314,21 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": false,
-          "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code."
+          "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code, KiloCode."
         },
         "restrictions": [],
         "policy_notes": "",
         "intro_pricing": true,
-        "intro_notes": "88% first-purchase discount"
+        "intro_notes": "First-purchase discount (~12% off)"
       },
       {
         "name": "Max",
-        "price_usd_monthly": null,
+        "price_usd_monthly": 100,
         "price_usd_annual": null,
         "requests_per_window": null,
         "window_hours": null,
         "tokens_monthly": null,
-        "credits_monthly": null,
+        "credits_monthly": 1600,
         "models_included": [
           "MiMo-V2-Pro",
           "MiMo-V2-Omni",
@@ -350,12 +347,12 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": false,
-          "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code."
+          "notes": "Explicitly compatible with OpenCode, OpenClaw, Claude Code, KiloCode."
         },
         "restrictions": [],
         "policy_notes": "",
         "intro_pricing": true,
-        "intro_notes": "88% first-purchase discount"
+        "intro_notes": "First-purchase discount (~12% off)"
       }
     ]
   },
@@ -601,7 +598,7 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
-          "notes": "Via OpenAI API key."
+          "notes": "Via OpenAI API key. All major clients supported."
         },
         "restrictions": [
           "Limited usage"
@@ -632,7 +629,7 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
-          "notes": "Via OpenAI API key."
+          "notes": "Via OpenAI API key. All major clients supported."
         },
         "restrictions": [],
         "policy_notes": "",
@@ -665,7 +662,7 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
-          "notes": "Via OpenAI API key."
+          "notes": "Via OpenAI API key. All major clients supported."
         },
         "restrictions": [],
         "policy_notes": "",
@@ -699,7 +696,7 @@ window.CODEPLANS_DATA = {
           "cline": true,
           "kilo": true,
           "roo": true,
-          "notes": "Via OpenAI API key."
+          "notes": "Via OpenAI API key. All major clients supported."
         },
         "restrictions": [],
         "policy_notes": "Unlimited access to all models.",
@@ -718,7 +715,7 @@ window.CODEPLANS_DATA = {
     "plans": [
       {
         "name": "Lite",
-        "price_usd_monthly": 6,
+        "price_usd_monthly": 90,
         "price_usd_annual": null,
         "requests_per_window": 120,
         "window_hours": 5,
@@ -744,11 +741,11 @@ window.CODEPLANS_DATA = {
         "restrictions": [],
         "policy_notes": "",
         "intro_pricing": true,
-        "intro_notes": "$3/mo for first billing cycle, then $6/mo"
+        "intro_notes": "$10/mo first cycle, then $90/mo"
       },
       {
         "name": "Pro",
-        "price_usd_monthly": 30,
+        "price_usd_monthly": 90,
         "price_usd_annual": null,
         "requests_per_window": 600,
         "window_hours": 5,
@@ -775,7 +772,7 @@ window.CODEPLANS_DATA = {
         "restrictions": [],
         "policy_notes": "",
         "intro_pricing": true,
-        "intro_notes": "$15/mo for first billing cycle, then $30/mo"
+        "intro_notes": "$10/mo first cycle, then $90/mo"
       }
     ]
   }

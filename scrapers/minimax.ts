@@ -11,23 +11,14 @@ const THIRD_PARTY = {
   notes: "Officially supported in OpenClaw, Cline, Kilo, Roo, Claude Code, Cursor, Zed.",
 };
 
-interface PlanDef {
-  name: string;
-  hint: string;
-  price: number;
-  requests: number;
-  modalities: string[];
-  restrictions: string[];
-  models: string[];
-}
-
-const PLAN_DEFS: PlanDef[] = [
-  { name: "Starter",        hint: "starter",        price: 10,  requests: 1500,  modalities: ["text", "code"],                                       restrictions: [],                                                                           models: ["MiniMax M2.7"] },
-  { name: "Plus",           hint: "plus",            price: 20,  requests: 4500,  modalities: ["text", "code", "audio", "image_gen"],                 restrictions: ["4000 speech chars/day", "50 images/day"],                                   models: ["MiniMax M2.7"] },
-  { name: "Max",            hint: "max",             price: 50,  requests: 15000, modalities: ["text", "code", "audio", "image_gen", "video", "music"],restrictions: ["11000 speech chars/day", "120 images/day", "2 videos/day", "4 songs/day"], models: ["MiniMax M2.7"] },
-  { name: "Plus Highspeed", hint: "plus-highspeed",  price: 40,  requests: 4500,  modalities: ["text", "code", "audio", "image_gen"],                 restrictions: ["9000 speech chars/day", "100 images/day"],                                  models: ["MiniMax M2.7-Highspeed"] },
-  { name: "Max Highspeed",  hint: "max-highspeed",   price: 80,  requests: 15000, modalities: ["text", "code", "audio", "image_gen", "video", "music"],restrictions: ["19000 speech chars/day", "200 images/day", "3 videos/day", "7 songs/day"], models: ["MiniMax M2.7-Highspeed"] },
-  { name: "Ultra Highspeed",hint: "ultra-highspeed", price: 150, requests: 30000, modalities: ["text", "code", "audio", "image_gen", "video", "music"],restrictions: ["50000 speech chars/day", "800 images/day", "5 videos/day", "15 songs/day"],models: ["MiniMax M2.7-Highspeed"] },
+// Each plan has a unique price — use price as the anchor, not the name
+const KNOWN_PLANS = [
+  { name: "Starter",         price: 10,  requests: 1500,  window: 5, modalities: ["text", "code"],                                        models: ["MiniMax M2.7"],           restrictions: [] },
+  { name: "Plus",            price: 20,  requests: 4500,  window: 5, modalities: ["text", "code", "audio", "image_gen"],                  models: ["MiniMax M2.7"],           restrictions: ["4000 speech chars/day", "50 images/day"] },
+  { name: "Max",             price: 50,  requests: 15000, window: 5, modalities: ["text", "code", "audio", "image_gen", "video", "music"], models: ["MiniMax M2.7"],           restrictions: ["11000 speech chars/day", "120 images/day", "2 videos/day", "4 songs/day"] },
+  { name: "Plus Highspeed",  price: 40,  requests: 4500,  window: 5, modalities: ["text", "code", "audio", "image_gen"],                  models: ["MiniMax M2.7-Highspeed"], restrictions: ["9000 speech chars/day", "100 images/day"] },
+  { name: "Max Highspeed",   price: 80,  requests: 15000, window: 5, modalities: ["text", "code", "audio", "image_gen", "video", "music"], models: ["MiniMax M2.7-Highspeed"], restrictions: ["19000 speech chars/day", "200 images/day", "3 videos/day", "7 songs/day"] },
+  { name: "Ultra Highspeed", price: 150, requests: 30000, window: 5, modalities: ["text", "code", "audio", "image_gen", "video", "music"], models: ["MiniMax M2.7-Highspeed"], restrictions: ["50000 speech chars/day", "800 images/day", "5 videos/day", "15 songs/day"] },
 ];
 
 export async function scrape(): Promise<ProviderData> {
@@ -36,32 +27,34 @@ export async function scrape(): Promise<ProviderData> {
     return page.innerText("body");
   });
 
-  function planPrice(hint: string, fallback: number): number {
-    const idx = text.toLowerCase().indexOf(hint.toLowerCase());
-    if (idx === -1) return fallback;
-    const slice = text.slice(idx, idx + 200);
-    const m = slice.match(/\$(\d+)/);
-    return m ? parseInt(m[1], 10) : fallback;
-  }
-
-  function planRequests(hint: string, fallback: number): number {
-    const idx = text.toLowerCase().indexOf(hint.toLowerCase());
-    if (idx === -1) return fallback;
+  // For each known plan, verify its price is still present in the page
+  // If the price changed, log a warning but keep the known data
+  function verifyPrice(name: string, expected: number): number {
+    const idx = text.search(new RegExp("\\b" + name.replace(/\s+/g, "\\s+") + "\\b", "i"));
+    if (idx === -1) return expected;
     const slice = text.slice(idx, idx + 300);
-    const m = slice.match(/([\d,]+)\s*(?:requests|req)/i);
-    return m ? parseInt(m[1].replace(/,/g, ""), 10) : fallback;
+    // Find all prices in the section and pick the one closest to expected
+    const prices = [...slice.matchAll(/\$(\d+)/g)].map(m => parseInt(m[1], 10));
+    if (prices.length === 0) return expected;
+    // Pick price closest to expected (avoids picking up a different plan's price)
+    const closest = prices.reduce((a, b) => Math.abs(a - expected) <= Math.abs(b - expected) ? a : b);
+    if (closest !== expected) {
+      console.warn(`  MiniMax ${name} price changed: expected $${expected}, found $${closest}`);
+      return closest;
+    }
+    return expected;
   }
 
   return {
     provider: "MiniMax",
     updated: today(),
     source_urls: SOURCE_URLS,
-    plans: PLAN_DEFS.map((def) => ({
+    plans: KNOWN_PLANS.map((def) => ({
       name: def.name,
-      price_usd_monthly: planPrice(def.hint, def.price),
+      price_usd_monthly: verifyPrice(def.name, def.price),
       price_usd_annual: null,
-      requests_per_window: planRequests(def.hint, def.requests),
-      window_hours: 5,
+      requests_per_window: def.requests,
+      window_hours: def.window,
       tokens_monthly: null,
       credits_monthly: null,
       models_included: def.models,

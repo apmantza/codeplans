@@ -16,20 +16,31 @@ const THIRD_PARTY = {
 
 const POLICY = "Anthropic blocked subscription OAuth tokens in third-party clients (OpenClaw, Cline, Kilo, Roo etc.) on April 4 2026, citing unsustainable compute costs.";
 
-// Plan shapes are stable — we just scrape to detect price changes
+// Known prices as fallbacks — scraped values override if found
+const KNOWN: Record<string, number> = {
+  Pro: 20,
+  "Max 5x": 100,
+  "Max 20x": 200,
+  Team: 30,
+};
+
 export async function scrape(): Promise<ProviderData> {
   const text = await withPage(SOURCE_URLS[0], async (page) => {
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(4000);
     return page.innerText("body");
   });
 
-  // Detect prices by scanning for known plan names
-  function price(hint: string): number | null {
-    const idx = text.toLowerCase().indexOf(hint.toLowerCase());
-    if (idx === -1) return null;
-    const slice = text.slice(idx, idx + 200);
-    const m = slice.match(/\$(\d+)/);
-    return m ? parseInt(m[1], 10) : null;
+  // Find price immediately after a plan heading — look for "$N\n" or "$N/month" pattern
+  // Anthropic pricing page lists: plan name, then price, then features
+  function price(planName: string, fallback: number): number {
+    const re = new RegExp(planName.replace(/\s/g, "\\s*") + "[\\s\\S]{0,60}?\\$(\\d+)", "i");
+    const m = text.match(re);
+    if (m) {
+      const v = parseInt(m[1], 10);
+      // Sanity check — prices should be reasonable
+      if (v >= 1 && v <= 500) return v;
+    }
+    return fallback;
   }
 
   return {
@@ -39,7 +50,7 @@ export async function scrape(): Promise<ProviderData> {
     plans: [
       {
         name: "Pro",
-        price_usd_monthly: price("Pro") ?? 20,
+        price_usd_monthly: price("Pro", KNOWN.Pro),
         price_usd_annual: null,
         requests_per_window: null,
         window_hours: null,
@@ -55,7 +66,7 @@ export async function scrape(): Promise<ProviderData> {
       },
       {
         name: "Max 5x",
-        price_usd_monthly: price("Max") ?? 100,
+        price_usd_monthly: price("Max", KNOWN["Max 5x"]),
         price_usd_annual: null,
         requests_per_window: null,
         window_hours: null,
@@ -71,7 +82,7 @@ export async function scrape(): Promise<ProviderData> {
       },
       {
         name: "Max 20x",
-        price_usd_monthly: 200,
+        price_usd_monthly: KNOWN["Max 20x"],
         price_usd_annual: null,
         requests_per_window: null,
         window_hours: null,
@@ -87,7 +98,7 @@ export async function scrape(): Promise<ProviderData> {
       },
       {
         name: "Team",
-        price_usd_monthly: price("Team") ?? 30,
+        price_usd_monthly: price("Team", KNOWN.Team),
         price_usd_annual: null,
         requests_per_window: null,
         window_hours: null,
