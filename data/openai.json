@@ -1,0 +1,99 @@
+{
+  "provider": "OpenAI",
+  "updated": "2026-04-06",
+  "source_urls": ["https://chatgpt.com/pricing"],
+  "plans": [
+    {
+      "name": "Free",
+      "price_usd_monthly": 0,
+      "price_usd_annual": null,
+      "requests_per_window": null,
+      "window_hours": null,
+      "tokens_monthly": null,
+      "credits_monthly": null,
+      "models_included": ["gpt-4o-mini"],
+      "modalities": ["text", "code"],
+      "third_party_clients": {
+        "supported": true,
+        "openclaw": true,
+        "cline": true,
+        "kilo": true,
+        "roo": true,
+        "notes": "Via OpenAI API key."
+      },
+      "restrictions": ["Limited usage"],
+      "policy_notes": "",
+      "intro_pricing": false,
+      "intro_notes": ""
+    },
+    {
+      "name": "Go",
+      "price_usd_monthly": 8,
+      "price_usd_annual": null,
+      "requests_per_window": null,
+      "window_hours": null,
+      "tokens_monthly": null,
+      "credits_monthly": null,
+      "models_included": ["gpt-4o"],
+      "modalities": ["text", "code", "image_input"],
+      "third_party_clients": {
+        "supported": true,
+        "openclaw": true,
+        "cline": true,
+        "kilo": true,
+        "roo": true,
+        "notes": "Via OpenAI API key."
+      },
+      "restrictions": [],
+      "policy_notes": "",
+      "intro_pricing": false,
+      "intro_notes": ""
+    },
+    {
+      "name": "Plus",
+      "price_usd_monthly": 20,
+      "price_usd_annual": null,
+      "requests_per_window": null,
+      "window_hours": null,
+      "tokens_monthly": null,
+      "credits_monthly": null,
+      "models_included": ["gpt-4o", "o3"],
+      "modalities": ["text", "code", "image_input", "image_gen", "audio", "video"],
+      "third_party_clients": {
+        "supported": true,
+        "openclaw": true,
+        "cline": true,
+        "kilo": true,
+        "roo": true,
+        "notes": "Via OpenAI API key."
+      },
+      "restrictions": [],
+      "policy_notes": "",
+      "intro_pricing": false,
+      "intro_notes": ""
+    },
+    {
+      "name": "Pro",
+      "price_usd_monthly": 200,
+      "price_usd_annual": null,
+      "requests_per_window": null,
+      "window_hours": null,
+      "tokens_monthly": null,
+      "credits_monthly": null,
+      "models_included": ["gpt-4o", "o3", "o3-pro"],
+      "modalities": ["text", "code", "image_input", "image_gen", "audio", "video"],
+      "third_party_clients": {
+        "supported": true,
+        "openclaw": true,
+        "cline": true,
+        "kilo": true,
+        "roo": true,
+        "notes": "Via OpenAI API key."
+      },
+      "restrictions": [],
+      "policy_notes": "Unlimited access to all models.",
+      "intro_pricing": false,
+      "intro_notes": ""
+    }
+  ]
+}

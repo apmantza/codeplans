@@ -1,0 +1,53 @@
+{
+  "provider": "z.ai (GLM)",
+  "updated": "2026-04-06",
+  "source_urls": ["https://z.ai/subscribe", "https://docs.z.ai/guides/overview/pricing"],
+  "plans": [
+    {
+      "name": "Lite",
+      "price_usd_monthly": 6,
+      "price_usd_annual": null,
+      "requests_per_window": 120,
+      "window_hours": 5,
+      "tokens_monthly": null,
+      "credits_monthly": null,
+      "models_included": ["GLM-5", "GLM-4.7-Flash", "GLM-4.5-Flash"],
+      "modalities": ["text", "code"],
+      "third_party_clients": {
+        "supported": true,
+        "openclaw": true,
+        "cline": true,
+        "kilo": true,
+        "roo": true,
+        "notes": "OpenAI-compatible API. Works with all major coding clients."
+      },
+      "restrictions": [],
+      "policy_notes": "",
+      "intro_pricing": true,
+      "intro_notes": "$3/mo for first billing cycle, then $6/mo"
+    },
+    {
+      "name": "Pro",
+      "price_usd_monthly": 30,
+      "price_usd_annual": null,
+      "requests_per_window": 600,
+      "window_hours": 5,
+      "tokens_monthly": null,
+      "credits_monthly": null,
+      "models_included": ["GLM-5", "GLM-5.1", "GLM-4.7-Flash", "GLM-4.5-Flash"],
+      "modalities": ["text", "code"],
+      "third_party_clients": {
+        "supported": true,
+        "openclaw": true,
+        "cline": true,
+        "kilo": true,
+        "roo": true,
+        "notes": "OpenAI-compatible API. Works with all major coding clients."
+      },
+      "restrictions": [],
+      "policy_notes": "",
+      "intro_pricing": true,
+      "intro_notes": "$15/mo for first billing cycle, then $30/mo"
+    }
+  ]
+}

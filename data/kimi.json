@@ -1,0 +1,53 @@
+{
+  "provider": "Kimi (Moonshot)",
+  "updated": "2026-04-06",
+  "source_urls": ["https://kimi-k2.com/pricing", "https://platform.moonshot.ai/docs/pricing/chat"],
+  "plans": [
+    {
+      "name": "Starter",
+      "price_usd_monthly": 9,
+      "price_usd_annual": 80,
+      "requests_per_window": null,
+      "window_hours": null,
+      "tokens_monthly": 10000000,
+      "credits_monthly": null,
+      "models_included": ["Kimi K2"],
+      "modalities": ["text", "code", "image_input"],
+      "third_party_clients": {
+        "supported": true,
+        "openclaw": true,
+        "cline": true,
+        "kilo": true,
+        "roo": true,
+        "notes": "Via Moonshot API and OpenRouter."
+      },
+      "restrictions": ["Overage at $0.70/1M tokens"],
+      "policy_notes": "",
+      "intro_pricing": false,
+      "intro_notes": ""
+    },
+    {
+      "name": "Ultra",
+      "price_usd_monthly": 49,
+      "price_usd_annual": 399,
+      "requests_per_window": null,
+      "window_hours": null,
+      "tokens_monthly": 70000000,
+      "credits_monthly": null,
+      "models_included": ["Kimi K2"],
+      "modalities": ["text", "code", "image_input"],
+      "third_party_clients": {
+        "supported": true,
+        "openclaw": true,
+        "cline": true,
+        "kilo": true,
+        "roo": true,
+        "notes": "Via Moonshot API and OpenRouter."
+      },
+      "restrictions": ["Overage at $0.50/1M tokens"],
+      "policy_notes": "",
+      "intro_pricing": false,
+      "intro_notes": ""
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>codeplans — AI Coding Plan Comparison</title>
+  <meta name="description" content="Compare AI coding subscription plans: pricing, rate limits, modalities, and third-party client support across Anthropic, OpenAI, z.ai, Kimi, MiniMax, and MiMo.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <h1><span>code</span>plans</h1>
+  <p>AI coding plan comparison — pricing, limits, modalities &amp; client compatibility</p>
+  <div class="updated" id="updated"></div>
+</header>
+
+<div class="filters">
+  <span style="font-size:12px;color:var(--muted);align-self:center;margin-right:4px;">Filter:</span>
+  <button class="filter-btn active" data-filter="all">All providers</button>
+  <button class="filter-btn" data-filter="third-party">3rd-party clients ✓</button>
+  <button class="filter-btn" data-filter="multimodal">Multimodal</button>
+</div>
+
+<div class="table-wrap">
+  <table id="plans-table">
+    <thead>
+      <tr>
+        <th class="provider-col">Provider / Plan</th>
+        <th>Price/mo</th>
+        <th>Rate limit</th>
+        <th>3rd-party clients</th>
+        <th>Modalities</th>
+        <th>Models</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+      <tr><td colspan="7" style="color:var(--muted);padding:24px">Loading...</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>
+  <span>Data updated weekly via GitHub Actions. Always verify with provider directly.</span>
+  <span>codeplans.dev</span>
+</footer>
+
+<script src="data.js"></script>
+<script>
+const CLIENTS = ["openclaw", "cline", "kilo", "roo"];
+const MODALITY_LABELS = {
+  text: "Text", code: "Code", image_input: "Image in",
+  image_gen: "Image gen", audio: "Audio", video: "Video",
+  music: "Music", file_upload: "Files"
+};
+
+function fmt(plan) {
+  const price = plan.price_usd_monthly != null
+    ? `$${plan.price_usd_monthly}`
+    : "—";
+
+  const annualNote = plan.price_usd_annual != null
+    ? `$${plan.price_usd_annual}/yr` : "";
+
+  const introHtml = plan.intro_pricing
+    ? `<div class="intro-badge">⚡ ${plan.intro_notes}</div>` : "";
+
+  const rateLimit = plan.requests_per_window != null
+    ? `<div class="rate-limit">${plan.requests_per_window.toLocaleString()} req <span>/ ${plan.window_hours}h</span></div>`
+    : plan.tokens_monthly != null
+    ? `<div class="rate-limit">${(plan.tokens_monthly/1e6).toFixed(0)}M <span>tokens/mo</span></div>`
+    : `<span style="color:var(--muted)">—</span>`;
+
+  const tc = plan.third_party_clients;
+  const tcBadge = tc.supported
+    ? `<span class="badge green"><span class="dot green"></span> Supported</span>`
+    : `<span class="badge red"><span class="dot red"></span> Blocked</span>`;
+
+  const clientTags = CLIENTS.map(c =>
+    `<span class="client-tag ${tc[c] ? 'yes' : 'no'}">${c}</span>`
+  ).join("");
+
+  const modalities = (plan.modalities || []).map(m =>
+    `<span class="modality">${MODALITY_LABELS[m] || m}</span>`
+  ).join("");
+
+  const models = (plan.models_included || []).join(", ") || "—";
+
+  const notes = [
+    tc.notes ? `<div style="font-size:11px;color:var(--muted);margin-top:4px">${tc.notes}</div>` : "",
+    plan.policy_notes ? `<div class="policy-note">⚠ ${plan.policy_notes}</div>` : "",
+    plan.restrictions?.length ? `<div style="font-size:11px;color:var(--muted);margin-top:4px">${plan.restrictions.join(" · ")}</div>` : ""
+  ].filter(Boolean).join("");
+
+  return { price, annualNote, introHtml, rateLimit, tcBadge, clientTags, modalities, models, notes, tc };
+}
+
+let activeFilter = "all";
+
+function render() {
+  const data = window.CODEPLANS_DATA;
+  const tbody = document.getElementById("table-body");
+  const rows = [];
+  const dates = [];
+
+  for (const [, provider] of Object.entries(data)) {
+    dates.push(provider.updated);
+    for (const plan of provider.plans) {
+      const f = fmt(plan);
+
+      // Filter logic
+      if (activeFilter === "third-party" && !plan.third_party_clients.supported) continue;
+      if (activeFilter === "multimodal" && plan.modalities.length < 3) continue;
+
+      rows.push(`
+        <tr data-provider="${provider.provider}" data-tc="${plan.third_party_clients.supported}">
+          <td>
+            <div class="provider-name">${provider.provider}</div>
+            <div class="plan-name">${plan.name}</div>
+          </td>
+          <td>
+            <div class="price">${f.price}</div>
+            ${f.annualNote ? `<div class="price-note">${f.annualNote}</div>` : ""}
+            ${f.introHtml}
+          </td>
+          <td>${f.rateLimit}</td>
+          <td>
+            ${f.tcBadge}
+            <div class="client-grid">${f.clientTags}</div>
+          </td>
+          <td><div class="modality-list">${f.modalities}</div></td>
+          <td style="font-size:11px;color:var(--muted);max-width:160px">${f.models}</td>
+          <td>${f.notes}</td>
+        </tr>
+      `);
+    }
+  }
+
+  tbody.innerHTML = rows.length ? rows.join("") : `<tr><td colspan="7" style="color:var(--muted);padding:24px">No plans match filter.</td></tr>`;
+
+  const latest = dates.sort().at(-1);
+  if (latest) document.getElementById("updated").textContent = `Updated ${latest}`;
+}
+
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>

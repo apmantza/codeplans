@@ -1,0 +1,102 @@
+{
+  "provider": "Anthropic",
+  "updated": "2026-04-06",
+  "source_urls": [
+    "https://claude.com/pricing",
+    "https://techcrunch.com/2026/04/04/anthropic-says-claude-code-subscribers-will-need-to-pay-extra-for-openclaw-support/"
+  ],
+  "plans": [
+    {
+      "name": "Pro",
+      "price_usd_monthly": 20,
+      "price_usd_annual": null,
+      "requests_per_window": null,
+      "window_hours": null,
+      "tokens_monthly": null,
+      "credits_monthly": null,
+      "models_included": ["claude-sonnet-4-6"],
+      "modalities": ["text", "code", "image_input", "file_upload"],
+      "third_party_clients": {
+        "supported": false,
+        "openclaw": false,
+        "cline": false,
+        "kilo": false,
+        "roo": false,
+        "notes": "Blocked as of April 4 2026. API required separately."
+      },
+      "restrictions": ["No third-party client access", "Claude.ai interface only"],
+      "policy_notes": "Anthropic blocked subscription OAuth tokens in third-party clients (OpenClaw, Cline, Kilo, Roo etc.) on April 4 2026, citing unsustainable compute costs.",
+      "intro_pricing": false,
+      "intro_notes": ""
+    },
+    {
+      "name": "Max 5x",
+      "price_usd_monthly": 100,
+      "price_usd_annual": null,
+      "requests_per_window": null,
+      "window_hours": null,
+      "tokens_monthly": null,
+      "credits_monthly": null,
+      "models_included": ["claude-sonnet-4-6", "claude-opus-4-6"],
+      "modalities": ["text", "code", "image_input", "file_upload"],
+      "third_party_clients": {
+        "supported": false,
+        "openclaw": false,
+        "cline": false,
+        "kilo": false,
+        "roo": false,
+        "notes": "Blocked as of April 4 2026. API required separately."
+      },
+      "restrictions": ["No third-party client access", "Claude.ai interface only"],
+      "policy_notes": "Same restriction as Pro. 5x usage limits vs Pro.",
+      "intro_pricing": false,
+      "intro_notes": ""
+    },
+    {
+      "name": "Max 20x",
+      "price_usd_monthly": 200,
+      "price_usd_annual": null,
+      "requests_per_window": null,
+      "window_hours": null,
+      "tokens_monthly": null,
+      "credits_monthly": null,
+      "models_included": ["claude-sonnet-4-6", "claude-opus-4-6"],
+      "modalities": ["text", "code", "image_input", "file_upload"],
+      "third_party_clients": {
+        "supported": false,
+        "openclaw": false,
+        "cline": false,
+        "kilo": false,
+        "roo": false,
+        "notes": "Blocked as of April 4 2026. API required separately."
+      },
+      "restrictions": ["No third-party client access", "Claude.ai interface only"],
+      "policy_notes": "Same restriction as Pro. 20x usage limits vs Pro.",
+      "intro_pricing": false,
+      "intro_notes": ""
+    },
+    {
+      "name": "Team",
+      "price_usd_monthly": 30,
+      "price_usd_annual": null,
+      "requests_per_window": null,
+      "window_hours": null,
+      "tokens_monthly": null,
+      "credits_monthly": null,
+      "models_included": ["claude-sonnet-4-6", "claude-opus-4-6"],
+      "modalities": ["text", "code", "image_input", "file_upload"],
+      "third_party_clients": {
+        "supported": false,
+        "openclaw": false,
+        "cline": false,
+        "kilo": false,
+        "roo": false,
+        "notes": "Blocked as of April 4 2026. API required separately."
+      },
+      "restrictions": ["No third-party client access", "Per user pricing"],
+      "policy_notes": "Per-user pricing. Same third-party restriction applies.",
+      "intro_pricing": false,
+      "intro_notes": ""
+    }
+  ]
+}

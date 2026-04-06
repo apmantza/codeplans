@@ -1,0 +1,17 @@
+{
+  "name": "codeplans",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "scrape": "tsx scrapers/run-all.ts",
+    "build": "tsx scripts/build-site.ts",
+    "dev": "npx serve site"
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@types/node": "^22.0.0",
+    "playwright": "^1.52.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}
