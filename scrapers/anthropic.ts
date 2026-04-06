@@ -1,5 +1,4 @@
 import { withPage, today, type ProviderData } from "./base.ts";
-import Anthropic from "@anthropic-ai/sdk";
 
 const SOURCE_URLS = [
   "https://claude.com/pricing",
@@ -15,48 +14,93 @@ const THIRD_PARTY = {
   notes: "Blocked as of April 4 2026. Subscription OAuth tokens no longer work in third-party clients. API access required separately.",
 };
 
+const POLICY = "Anthropic blocked subscription OAuth tokens in third-party clients (OpenClaw, Cline, Kilo, Roo etc.) on April 4 2026, citing unsustainable compute costs.";
+
+// Plan shapes are stable — we just scrape to detect price changes
 export async function scrape(): Promise<ProviderData> {
-  const pageText = await withPage(SOURCE_URLS[0], async (page) => {
+  const text = await withPage(SOURCE_URLS[0], async (page) => {
     await page.waitForTimeout(3000);
     return page.innerText("body");
   });
 
-  const client = new Anthropic();
-  const response = await client.messages.create({
-    model: "claude-sonnet-4-6",
-    max_tokens: 2000,
-    messages: [{
-      role: "user",
-      content: `Extract all Claude consumer subscription plans from this pricing page text. Return a JSON array of plans with fields: name, price_usd_monthly, price_usd_annual, models_included (array), modalities (array of: text/code/image_input/image_gen/audio/video/file_upload), restrictions (array of strings). Page text:\n\n${pageText.slice(0, 8000)}`,
-    }],
-  });
-
-  let plans: ProviderData["plans"] = [];
-  try {
-    const raw = (response.content[0] as { text: string }).text;
-    const match = raw.match(/\[[\s\S]*\]/);
-    if (match) plans = JSON.parse(match[0]);
-  } catch {
-    // Fall back to known data
+  // Detect prices by scanning for known plan names
+  function price(hint: string): number | null {
+    const idx = text.toLowerCase().indexOf(hint.toLowerCase());
+    if (idx === -1) return null;
+    const slice = text.slice(idx, idx + 200);
+    const m = slice.match(/\$(\d+)/);
+    return m ? parseInt(m[1], 10) : null;
   }
-
-  // Ensure third_party_clients and policy_notes are set on every plan
-  plans = plans.map((p) => ({
-    ...p,
-    requests_per_window: null,
-    window_hours: null,
-    tokens_monthly: null,
-    credits_monthly: null,
-    third_party_clients: THIRD_PARTY,
-    policy_notes: "Third-party client access (OpenClaw, Cline, Kilo, Roo etc.) blocked as of April 4 2026. Users must pay API rates separately.",
-    intro_pricing: false,
-    intro_notes: "",
-  }));
 
   return {
     provider: "Anthropic",
     updated: today(),
     source_urls: SOURCE_URLS,
-    plans,
+    plans: [
+      {
+        name: "Pro",
+        price_usd_monthly: price("Pro") ?? 20,
+        price_usd_annual: null,
+        requests_per_window: null,
+        window_hours: null,
+        tokens_monthly: null,
+        credits_monthly: null,
+        models_included: ["claude-sonnet-4-6"],
+        modalities: ["text", "code", "image_input", "file_upload"],
+        third_party_clients: THIRD_PARTY,
+        restrictions: ["Claude.ai interface only"],
+        policy_notes: POLICY,
+        intro_pricing: false,
+        intro_notes: "",
+      },
+      {
+        name: "Max 5x",
+        price_usd_monthly: price("Max") ?? 100,
+        price_usd_annual: null,
+        requests_per_window: null,
+        window_hours: null,
+        tokens_monthly: null,
+        credits_monthly: null,
+        models_included: ["claude-sonnet-4-6", "claude-opus-4-6"],
+        modalities: ["text", "code", "image_input", "file_upload"],
+        third_party_clients: THIRD_PARTY,
+        restrictions: ["Claude.ai interface only", "5x usage vs Pro"],
+        policy_notes: POLICY,
+        intro_pricing: false,
+        intro_notes: "",
+      },
+      {
+        name: "Max 20x",
+        price_usd_monthly: 200,
+        price_usd_annual: null,
+        requests_per_window: null,
+        window_hours: null,
+        tokens_monthly: null,
+        credits_monthly: null,
+        models_included: ["claude-sonnet-4-6", "claude-opus-4-6"],
+        modalities: ["text", "code", "image_input", "file_upload"],
+        third_party_clients: THIRD_PARTY,
+        restrictions: ["Claude.ai interface only", "20x usage vs Pro"],
+        policy_notes: POLICY,
+        intro_pricing: false,
+        intro_notes: "",
+      },
+      {
+        name: "Team",
+        price_usd_monthly: price("Team") ?? 30,
+        price_usd_annual: null,
+        requests_per_window: null,
+        window_hours: null,
+        tokens_monthly: null,
+        credits_monthly: null,
+        models_included: ["claude-sonnet-4-6", "claude-opus-4-6"],
+        modalities: ["text", "code", "image_input", "file_upload"],
+        third_party_clients: THIRD_PARTY,
+        restrictions: ["Claude.ai interface only", "Per-user pricing"],
+        policy_notes: POLICY,
+        intro_pricing: false,
+        intro_notes: "",
+      },
+    ],
   };
 }

@@ -1,5 +1,4 @@
 import { withPage, today, type ProviderData } from "./base.ts";
-import Anthropic from "@anthropic-ai/sdk";
 
 const SOURCE_URLS = [
   "https://z.ai/subscribe",
@@ -12,52 +11,85 @@ const THIRD_PARTY = {
   cline: true,
   kilo: true,
   roo: true,
-  notes: "Explicitly supported via OpenAI-compatible API endpoint.",
+  notes: "OpenAI-compatible API. Works with all major coding clients.",
 };
 
 export async function scrape(): Promise<ProviderData> {
-  const pageText = await withPage(SOURCE_URLS[0], async (page) => {
+  const text = await withPage(SOURCE_URLS[0], async (page) => {
     await page.waitForTimeout(4000);
     return page.innerText("body");
   });
 
-  const docsText = await withPage(SOURCE_URLS[1], async (page) => {
-    await page.waitForTimeout(2000);
-    return page.innerText("body");
-  });
-
-  const client = new Anthropic();
-  const response = await client.messages.create({
-    model: "claude-sonnet-4-6",
-    max_tokens: 2000,
-    messages: [{
-      role: "user",
-      content: `Extract all z.ai / GLM coding subscription plans from this text. Return a JSON array of plans with fields: name, price_usd_monthly (regular price), requests_per_window, window_hours, models_included (array), modalities (array), restrictions (array), intro_pricing (bool), intro_notes (string with intro price if different). Text:\n\n${(pageText + "\n\n" + docsText).slice(0, 8000)}`,
-    }],
-  });
-
-  let plans: ProviderData["plans"] = [];
-  try {
-    const raw = (response.content[0] as { text: string }).text;
-    const match = raw.match(/\[[\s\S]*\]/);
-    if (match) plans = JSON.parse(match[0]);
-  } catch {
-    // Fall back to known data
+  // z.ai shows intro price first, then regular
+  // Pattern: "Lite ... $3 ... $6" or similar
+  function extractPlanPrice(planName: string, fallback: number): number {
+    const idx = text.toLowerCase().indexOf(planName.toLowerCase());
+    if (idx === -1) return fallback;
+    // Get prices after the plan name — take the last (regular) price
+    const slice = text.slice(idx, idx + 300);
+    const prices = [...slice.matchAll(/\$(\d+)/g)].map(m => parseInt(m[1], 10));
+    // Intro price is lower, regular is higher — return the higher one
+    return prices.length >= 2 ? Math.max(...prices) : (prices[0] ?? fallback);
   }
 
-  plans = plans.map((p) => ({
-    ...p,
-    price_usd_annual: null,
-    tokens_monthly: null,
-    credits_monthly: null,
-    third_party_clients: THIRD_PARTY,
-    policy_notes: "",
-  }));
+  function extractIntroPrice(planName: string, fallback: number): number {
+    const idx = text.toLowerCase().indexOf(planName.toLowerCase());
+    if (idx === -1) return fallback;
+    const slice = text.slice(idx, idx + 300);
+    const prices = [...slice.matchAll(/\$(\d+)/g)].map(m => parseInt(m[1], 10));
+    return prices.length >= 2 ? Math.min(...prices) : (prices[0] ?? fallback);
+  }
+
+  function extractRequests(planName: string, fallback: number): number {
+    const idx = text.toLowerCase().indexOf(planName.toLowerCase());
+    if (idx === -1) return fallback;
+    const slice = text.slice(idx, idx + 300);
+    const m = slice.match(/(\d+)\s*(?:prompts|requests)/i);
+    return m ? parseInt(m[1], 10) : fallback;
+  }
+
+  const liteIntro = extractIntroPrice("lite", 3);
+  const liteRegular = extractPlanPrice("lite", 6);
+  const proIntro = extractIntroPrice("pro", 15);
+  const proRegular = extractPlanPrice("pro", 30);
 
   return {
     provider: "z.ai (GLM)",
     updated: today(),
     source_urls: SOURCE_URLS,
-    plans,
+    plans: [
+      {
+        name: "Lite",
+        price_usd_monthly: liteRegular,
+        price_usd_annual: null,
+        requests_per_window: extractRequests("lite", 120),
+        window_hours: 5,
+        tokens_monthly: null,
+        credits_monthly: null,
+        models_included: ["GLM-5", "GLM-4.7-Flash", "GLM-4.5-Flash"],
+        modalities: ["text", "code"],
+        third_party_clients: THIRD_PARTY,
+        restrictions: [],
+        policy_notes: "",
+        intro_pricing: liteIntro < liteRegular,
+        intro_notes: liteIntro < liteRegular ? `$${liteIntro}/mo first cycle, then $${liteRegular}/mo` : "",
+      },
+      {
+        name: "Pro",
+        price_usd_monthly: proRegular,
+        price_usd_annual: null,
+        requests_per_window: extractRequests("pro", 600),
+        window_hours: 5,
+        tokens_monthly: null,
+        credits_monthly: null,
+        models_included: ["GLM-5", "GLM-5.1", "GLM-4.7-Flash", "GLM-4.5-Flash"],
+        modalities: ["text", "code"],
+        third_party_clients: THIRD_PARTY,
+        restrictions: [],
+        policy_notes: "",
+        intro_pricing: proIntro < proRegular,
+        intro_notes: proIntro < proRegular ? `$${proIntro}/mo first cycle, then $${proRegular}/mo` : "",
+      },
+    ],
   };
 }

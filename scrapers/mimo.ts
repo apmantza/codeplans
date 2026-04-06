@@ -1,10 +1,6 @@
 import { withPage, today, type ProviderData } from "./base.ts";
-import Anthropic from "@anthropic-ai/sdk";
 
-const SOURCE_URLS = [
-  "https://mimo.mi.com/",
-  "https://platform.xiaomimimo.com/",
-];
+const SOURCE_URLS = ["https://mimo.mi.com/"];
 
 const THIRD_PARTY = {
   supported: true,
@@ -12,53 +8,54 @@ const THIRD_PARTY = {
   cline: true,
   kilo: true,
   roo: false,
-  notes: "Explicitly supported: OpenCode, OpenClaw, Claude Code. Compatible with any OpenAI-compatible client.",
+  notes: "Explicitly compatible with OpenCode, OpenClaw, Claude Code.",
 };
 
+const PLAN_NAMES = ["Lite", "Standard", "Pro", "Max"];
+
 export async function scrape(): Promise<ProviderData> {
-  const pageText = await withPage(SOURCE_URLS[0], async (page) => {
-    // MiMo is a React app — wait for pricing content
+  const text = await withPage(SOURCE_URLS[0], async (page) => {
     await page.waitForTimeout(5000);
+    // Wait for any price to appear
     try {
-      await page.waitForSelector("text=/\\$|USD|Lite|Standard|Pro|Max/i", { timeout: 10000 });
+      await page.waitForSelector("text=/\\$\\d+/", { timeout: 10000 });
     } catch {
-      // Continue with whatever loaded
+      // Continue with whatever rendered
     }
     return page.innerText("body");
   });
 
-  const client = new Anthropic();
-  const response = await client.messages.create({
-    model: "claude-sonnet-4-6",
-    max_tokens: 2000,
-    messages: [{
-      role: "user",
-      content: `Extract all Xiaomi MiMo token subscription plans from this page. Show USD prices only. Return a JSON array with fields: name, price_usd_monthly, price_usd_annual, credits_monthly, models_included (array), modalities (array of: text/code/image_input/audio/video), restrictions (array), intro_pricing (bool), intro_notes (string). Page text:\n\n${pageText.slice(0, 8000)}`,
-    }],
-  });
-
-  let plans: ProviderData["plans"] = [];
-  try {
-    const raw = (response.content[0] as { text: string }).text;
-    const match = raw.match(/\[[\s\S]*\]/);
-    if (match) plans = JSON.parse(match[0]);
-  } catch {
-    // Fall back to known data
+  // Extract prices per plan — MiMo shows USD prices on the international page
+  function planPrice(name: string): number | null {
+    const idx = text.toLowerCase().indexOf(name.toLowerCase());
+    if (idx === -1) return null;
+    const slice = text.slice(idx, idx + 300);
+    const m = slice.match(/\$(\d+(?:\.\d+)?)/);
+    return m ? parseFloat(m[1]) : null;
   }
 
-  plans = plans.map((p) => ({
-    ...p,
-    requests_per_window: null,
-    window_hours: null,
-    tokens_monthly: null,
-    third_party_clients: THIRD_PARTY,
-    policy_notes: "",
-  }));
+  // Check if intro discount is mentioned
+  const hasIntro = /88%|first.{0,20}discount|limited.{0,20}discount/i.test(text);
 
   return {
     provider: "Xiaomi MiMo",
     updated: today(),
     source_urls: SOURCE_URLS,
-    plans,
+    plans: PLAN_NAMES.map((name) => ({
+      name,
+      price_usd_monthly: planPrice(name),
+      price_usd_annual: null,
+      requests_per_window: null,
+      window_hours: null,
+      tokens_monthly: null,
+      credits_monthly: null,
+      models_included: ["MiMo-V2-Pro", "MiMo-V2-Omni", "MiMo-V2-TTS"],
+      modalities: ["text", "code", "image_input", "audio", "video"],
+      third_party_clients: THIRD_PARTY,
+      restrictions: [],
+      policy_notes: "",
+      intro_pricing: hasIntro,
+      intro_notes: hasIntro ? "88% first-purchase discount" : "",
+    })),
   };
 }

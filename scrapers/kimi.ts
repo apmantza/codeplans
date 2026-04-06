@@ -1,10 +1,6 @@
 import { withPage, today, type ProviderData } from "./base.ts";
-import Anthropic from "@anthropic-ai/sdk";
 
-const SOURCE_URLS = [
-  "https://kimi-k2.com/pricing",
-  "https://platform.moonshot.ai/docs/pricing/chat",
-];
+const SOURCE_URLS = ["https://kimi-k2.com/pricing"];
 
 const THIRD_PARTY = {
   supported: true,
@@ -12,49 +8,81 @@ const THIRD_PARTY = {
   cline: true,
   kilo: true,
   roo: true,
-  notes: "Supported via Moonshot API and OpenRouter.",
+  notes: "Via Moonshot API and OpenRouter.",
 };
 
 export async function scrape(): Promise<ProviderData> {
-  const pageText = await withPage(SOURCE_URLS[0], async (page) => {
+  const text = await withPage(SOURCE_URLS[0], async (page) => {
     await page.waitForTimeout(3000);
     return page.innerText("body");
   });
 
-  const client = new Anthropic();
-  const response = await client.messages.create({
-    model: "claude-sonnet-4-6",
-    max_tokens: 2000,
-    messages: [{
-      role: "user",
-      content: `Extract all Kimi / Moonshot subscription plans from this pricing page. Return a JSON array of plans with fields: name, price_usd_monthly, price_usd_annual, tokens_monthly, models_included (array), modalities (array of: text/code/image_input/audio/video), restrictions (array). Page text:\n\n${pageText.slice(0, 8000)}`,
-    }],
-  });
-
-  let plans: ProviderData["plans"] = [];
-  try {
-    const raw = (response.content[0] as { text: string }).text;
-    const match = raw.match(/\[[\s\S]*\]/);
-    if (match) plans = JSON.parse(match[0]);
-  } catch {
-    // Fall back to known data
+  function planPrice(hint: string, fallback: number): number {
+    const idx = text.toLowerCase().indexOf(hint.toLowerCase());
+    if (idx === -1) return fallback;
+    const slice = text.slice(idx, idx + 200);
+    const m = slice.match(/\$(\d+)/);
+    return m ? parseInt(m[1], 10) : fallback;
   }
 
-  plans = plans.map((p) => ({
-    ...p,
-    requests_per_window: null,
-    window_hours: null,
-    credits_monthly: null,
-    third_party_clients: THIRD_PARTY,
-    policy_notes: "",
-    intro_pricing: false,
-    intro_notes: "",
-  }));
+  function planTokens(hint: string, fallback: number): number {
+    const idx = text.toLowerCase().indexOf(hint.toLowerCase());
+    if (idx === -1) return fallback;
+    const slice = text.slice(idx, idx + 300);
+    // Match patterns like "10M", "70M"
+    const m = slice.match(/(\d+)M\s*tokens/i);
+    if (m) return parseInt(m[1], 10) * 1_000_000;
+    // Or raw numbers like "10,000,000"
+    const m2 = slice.match(/([\d,]+)\s*tokens/i);
+    return m2 ? parseInt(m2[1].replace(/,/g, ""), 10) : fallback;
+  }
+
+  function annualPrice(hint: string, fallback: number | null): number | null {
+    const idx = text.toLowerCase().indexOf(hint.toLowerCase());
+    if (idx === -1) return fallback;
+    const slice = text.slice(idx, idx + 400);
+    const prices = [...slice.matchAll(/\$(\d+)/g)].map(m => parseInt(m[1], 10));
+    // Annual price is usually the second/larger price mentioned after monthly
+    return prices.length >= 2 ? prices[1] : fallback;
+  }
 
   return {
     provider: "Kimi (Moonshot)",
     updated: today(),
     source_urls: SOURCE_URLS,
-    plans,
+    plans: [
+      {
+        name: "Starter",
+        price_usd_monthly: planPrice("starter", 9),
+        price_usd_annual: annualPrice("starter", 80),
+        requests_per_window: null,
+        window_hours: null,
+        tokens_monthly: planTokens("starter", 10_000_000),
+        credits_monthly: null,
+        models_included: ["Kimi K2"],
+        modalities: ["text", "code", "image_input"],
+        third_party_clients: THIRD_PARTY,
+        restrictions: ["Overage at $0.70/1M tokens"],
+        policy_notes: "",
+        intro_pricing: false,
+        intro_notes: "",
+      },
+      {
+        name: "Ultra",
+        price_usd_monthly: planPrice("ultra", 49),
+        price_usd_annual: annualPrice("ultra", 399),
+        requests_per_window: null,
+        window_hours: null,
+        tokens_monthly: planTokens("ultra", 70_000_000),
+        credits_monthly: null,
+        models_included: ["Kimi K2"],
+        modalities: ["text", "code", "image_input"],
+        third_party_clients: THIRD_PARTY,
+        restrictions: ["Overage at $0.50/1M tokens"],
+        policy_notes: "",
+        intro_pricing: false,
+        intro_notes: "",
+      },
+    ],
   };
 }

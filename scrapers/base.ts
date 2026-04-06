@@ -1,5 +1,29 @@
 import { chromium, type Page } from "playwright";
 
+/** Extract a USD price like $20, $9.99, $200 from a string */
+export function extractPrice(text: string, hint: string): number | null {
+  // Look for the hint word nearby a dollar amount
+  const idx = text.toLowerCase().indexOf(hint.toLowerCase());
+  if (idx === -1) return null;
+  const slice = text.slice(Math.max(0, idx - 60), idx + 120);
+  const match = slice.match(/\$(\d+(?:\.\d+)?)/);
+  return match ? parseFloat(match[1]) : null;
+}
+
+/** Find all $N price values near a keyword */
+export function extractPrices(text: string): number[] {
+  return [...text.matchAll(/\$(\d+(?:\.\d+)?)/g)].map(m => parseFloat(m[1]));
+}
+
+/** Extract a number from text near a keyword */
+export function extractNumber(text: string, hint: string): number | null {
+  const idx = text.toLowerCase().indexOf(hint.toLowerCase());
+  if (idx === -1) return null;
+  const slice = text.slice(idx, idx + 80);
+  const match = slice.match(/[\d,]+/);
+  return match ? parseInt(match[0].replace(/,/g, ""), 10) : null;
+}
+
 export async function withPage<T>(
   url: string,
   fn: (page: Page) => Promise<T>,
